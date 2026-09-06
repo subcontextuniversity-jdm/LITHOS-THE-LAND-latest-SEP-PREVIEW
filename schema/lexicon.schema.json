@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lithos.land/schema/lexicon.schema.json",
+  "title": "ICON//LEXICON semantic entity definitions",
+  "description": "The representation layer of the LITHOS constitution. Held to the same audit discipline as the passport spec.",
+  "type": "object",
+  "definitions": {
+    "category": {
+      "description": "Authoritative category (Caution 1). The spine plus two operational categories. A glyph's category is part of the grammar and cannot be silently re-filed.",
+      "enum": ["HUMAN", "PLACE", "THING", "THREAD", "ACTION", "GUARDIAN", "TRACE", "CONNECTOR", "SYSTEM", "LEXICON"]
+    },
+    "surface": {
+      "description": "Where a glyph is permitted to appear. Lock 2 uses surface to keep one glyph = one runtime meaning.",
+      "enum": ["MAP", "RENDER", "PICKER", "GUARDIAN", "RECEIPT"]
+    },
+    "glyph": {
+      "type": "object",
+      "required": ["id", "mark", "name", "category", "meaning", "surfaces", "keywords"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "description": "Stable identity of the entry. Never changes.", "pattern": "^[a-z0-9-]+$" },
+        "mark": { "type": "string", "description": "Visual mark. Pure presentation (Lock 1) — swappable without consequence." },
+        "name": { "type": "string" },
+        "category": { "$ref": "#/definitions/category" },
+        "meaning": { "type": "string", "minLength": 1, "description": "Exactly one runtime meaning (Lock 2)." },
+        "surfaces": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/surface" } },
+        "keywords": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "thing": {
+      "type": "object",
+      "required": ["ref", "type", "name", "glyphId", "accent", "state"],
+      "additionalProperties": false,
+      "properties": {
+        "ref": { "type": "string", "description": "Identity. Never mutated by representation changes (Law 06).", "pattern": "^THING://[0-9]{4}$" },
+        "type": { "$ref": "#/definitions/category" },
+        "name": { "type": "string", "description": "Presentation." },
+        "glyphId": { "type": "string", "description": "Presentation. References a glyph id." },
+        "accent": { "type": "string", "description": "Presentation. 'inherited' or a colour token." },
+        "state": { "type": "string" },
+        "weight": { "type": "integer", "minimum": 0, "description": "Memory — count of representation changes carried." },
+        "scars": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["at", "from", "to"],
+            "properties": {
+              "at": { "type": "string" },
+              "from": { "type": "string" },
+              "to": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "glyphs": { "type": "array", "items": { "$ref": "#/definitions/glyph" } },
+    "things": { "type": "array", "items": { "$ref": "#/definitions/thing" } }
+  }
+}
