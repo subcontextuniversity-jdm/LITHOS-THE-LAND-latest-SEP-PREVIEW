@@ -90,7 +90,7 @@ export function createWorld(saved) {
   };
 }
 
-export function startSlice(root, world, { onReplayOrigin }) {
+export function startSlice(root, world, { onReplayOrigin, onOpenLand }) {
   const ac = new AbortController();
   const { signal } = ac;
 
@@ -194,6 +194,14 @@ export function startSlice(root, world, { onReplayOrigin }) {
             <p class="lede">Not a dashboard. A room. You can leave without asking permission.</p>
           </div>
           <div class="home-grid">
+            <button class="door glass" data-act="land" type="button">
+              <div>
+                <div class="tiny">Pocket</div>
+                <strong>Good afternoon ◡</strong>
+                <p class="lede">🎵 VIGIL · 🎨 STUDIO · 🧊 THINGS · 🌱 GARDEN</p>
+              </div>
+              <div class="hint">Leaves become screens →</div>
+            </button>
             <button class="door glass" data-act="place" type="button">
               <div>
                 <div class="tiny">Door</div>
@@ -490,6 +498,11 @@ export function startSlice(root, world, { onReplayOrigin }) {
     if (act === "replay") {
       ac.abort();
       onReplayOrigin();
+      return;
+    }
+    if (act === "land") {
+      ac.abort();
+      onOpenLand();
       return;
     }
     if (act === "home") go("home");

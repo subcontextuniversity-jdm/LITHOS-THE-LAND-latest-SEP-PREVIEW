@@ -1,0 +1,45 @@
+Stamp these in the edit. Do not ask the video model to draw them.
+
+CLIP 01 + 02 (machinery)
+
+00:01  LITHOS://LAND
+00:03  G = (V,E)
+00:06  ADA://COMPOSE
+00:09  TREE / STAGE / TRACE
+00:12  THREAD = RELATIONSHIP
+00:14  KNOT = DECISION
+
+────────── DIAMOND HANDOFF ──────────
+
+00:17  THING://0041
+00:19  SAME THING / DIFFERENT SURFACE
+00:22  ROOT → BRANCH → THING → REMIX
+00:26  LORE / LAW / MATH / CODE
+00:29  LITHOS//THE LAND_
+
+CLIP 03 + 04 (payoff) — Pocket type, not thesis slogans
+
+00:31  JOSH
+       Good afternoon ◡
+
+00:34  PLACES
+       🎵 VIGIL
+       🎨 STUDIO
+       🧊 THINGS
+       🌱 GARDEN
+
+00:38  VIGIL
+       ├─ 🎵 AUDIO
+       ├─ 🎨 ART
+       ├─ ◇ 3D
+       ├─ ✎ NOTES
+       └─ ⌘ CODE
+
+00:41  ◇ THING://0041
+
+00:46  🪡 WEAVE
+00:50  ADA proposes. You pull the knot.
+00:56  HUMAN MADE SOMETHING.
+00:59  _
+
+Emoji counterweight: 🪡 🌱 🎵 🧊 🌀 🧵 📎 🛠️ 🪨 🐒
