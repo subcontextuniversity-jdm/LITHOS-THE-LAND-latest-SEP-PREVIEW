@@ -29,6 +29,7 @@ python3 -m http.server 4173 --bind 127.0.0.1
 - `/?enter=1` — the Bench slice
 - `/?land=1` — Pocket
 - `/?proof=1` — HANDOFF 002 five-act proof (browser layouts; conversion SIMULATED; authorization DEMO-ONLY)
+- `/?spine=1` — credential spine experiments (connectors ABSENT; secrets not stored; HANDOFF 003 not written)
 
 ## Canon
 
@@ -36,6 +37,7 @@ python3 -m http.server 4173 --bind 127.0.0.1
 - `canon/THE-THINGS-WE-CARRY.md` — the origin
 - `canon/VISUAL-GRAMMAR-06.txt` — locked wording
 - `canon/LAW.md` — this slice only
+- `canon/SPINE.md` — credential boundary experiments; not public handoff 003
 
 ## Film
 

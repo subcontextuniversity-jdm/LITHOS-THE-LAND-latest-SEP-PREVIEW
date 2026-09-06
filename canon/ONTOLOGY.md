@@ -9,7 +9,7 @@ Everything meaningful comes from somewhere.
 HANDOFF 002 // CONTINUITY
 Changing form does not require losing identity.
 
-003 // eventually — not written
+003 // planted as experiments — public handoff not written
 CAPABILITY
 Something else can work on a Thing
 without owning the Thing, the Place,
@@ -97,6 +97,10 @@ LIBRARY    ≠ FOLDER SYSTEM
 STAGE      ≠ 3D APP
 ADA        ≠ AI BUTTON
 TALON      ≠ AUTONOMOUS OWNER
+SENTINEL   ≠ LOGIN PROMPT
+GLASS      ≠ DASHBOARD
+FORGE      ≠ COPILOT
+LUMO       ≠ CHATBOT
 TRACE      ≠ VERSION HISTORY
 RECEIPT    ≠ ACTIVITY LOG
 KNOT       ≠ SAVE BUTTON

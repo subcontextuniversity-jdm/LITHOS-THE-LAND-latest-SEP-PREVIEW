@@ -27,10 +27,14 @@ const PILLARS = [
 const MYTH = {
   ...GRAMMAR,
   TALON: "capability",
+  SENTINEL: "boundary",
+  GLASS: "review",
+  FORGE: "build",
+  LUMO: "private thinking",
   ADA: "composition",
 };
 
-export function startLand(root, { onPocket, onBench, onOrigin, onProof }) {
+export function startLand(root, { onPocket, onBench, onOrigin, onProof, onSpine }) {
   const ac = new AbortController();
   const { signal } = ac;
   const state = { overlay: null, handshake: true };
@@ -116,6 +120,12 @@ export function startLand(root, { onPocket, onBench, onOrigin, onProof }) {
             <strong>THE THING THAT SURVIVES</strong>
             <p class="lede">THING://0041 through Pocket, Workbench and Drafting Table as browser layouts. Conversion is SIMULATED. Authorization is DEMO-ONLY.</p>
             <div class="hint">Bring a Thing →</div>
+          </button>
+          <button class="door glass" data-act="spine" type="button">
+            <div class="tiny">SKETCH · SPINE</div>
+            <strong>THE CREDENTIAL BOUNDARY</strong>
+            <p class="lede">Proton keeps secrets. Firefox faces models. Agents receive passports, not Josh's login. PUBLIC HANDOFF 003 is not written.</p>
+            <div class="hint">Open the spine →</div>
           </button>
           <div class="glass absent-card">
             <div class="tiny">ABSENT</div>
@@ -241,6 +251,11 @@ HUMANS choose.</pre>
       if (act === "proof") {
         ac.abort();
         onProof();
+        return;
+      }
+      if (act === "spine") {
+        ac.abort();
+        onSpine();
         return;
       }
     },

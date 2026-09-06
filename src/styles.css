@@ -263,6 +263,65 @@ body {
   color: var(--mute);
 }
 
+button.chip {
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  color: var(--mute);
+}
+
+button.chip.on {
+  color: var(--cyan);
+  border-color: var(--cyan-2);
+}
+
+.spine-body {
+  padding-top: 18px;
+}
+
+.spine-map {
+  font-size: 12px;
+  line-height: 1.35;
+  overflow-x: auto;
+  color: var(--cyan);
+}
+
+.bay-grid,
+.exp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.bay-card.absent,
+.exp-card.absent {
+  opacity: 0.62;
+}
+
+.flag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.model-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+.model-pane {
+  min-height: 88px;
+}
+
+.actions.wrap {
+  max-width: none;
+}
+
 .toaster {
   width: min(420px, 88vw);
   background: #1a1c22;
@@ -1222,6 +1281,9 @@ button.btn {
   .plant-grid,
   .proof-layout,
   .surface-row,
+  .bay-grid,
+  .exp-grid,
+  .model-row,
   .surface-grid {
     grid-template-columns: 1fr;
   }

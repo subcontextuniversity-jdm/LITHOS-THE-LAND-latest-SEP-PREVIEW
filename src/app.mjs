@@ -3,6 +3,7 @@ import { createWorld, startSlice } from "./slice.mjs";
 import { startPocket } from "./pocket.mjs";
 import { startLand } from "./land.mjs";
 import { startProof } from "./travel.mjs";
+import { startSpine } from "./spine.mjs";
 import { loadState } from "./store.mjs";
 
 const root = document.getElementById("app");
@@ -25,6 +26,15 @@ function bootLand() {
     },
     onOrigin: () => startOrigin(worldFrom()),
     onProof: () => bootProof(worldFrom()),
+    onSpine: () => bootSpine(worldFrom()),
+  });
+}
+
+function bootSpine(world) {
+  session.stop();
+  session = startSpine(root, {
+    human: world?.human ?? { id: "human-josh", name: "Josh", role: "CURSOR" },
+    onBack: () => bootLand(),
   });
 }
 
@@ -69,11 +79,14 @@ const skip = params.get("enter") === "1";
 const land = params.get("land") === "1" || params.get("pocket") === "1";
 const origin = params.get("origin") === "1";
 const proof = params.get("proof") === "1";
+const spine = params.get("spine") === "1";
 
 if (origin) {
   startOrigin(worldFrom(saved));
 } else if (proof) {
   bootProof(worldFrom(saved));
+} else if (spine) {
+  bootSpine(worldFrom(saved));
 } else if (land) {
   bootPocket(worldFrom(saved));
 } else if (skip) {
