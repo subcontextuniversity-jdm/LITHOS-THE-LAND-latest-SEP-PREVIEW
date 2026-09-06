@@ -4,7 +4,7 @@ Ed25519 passport gate for thread actions. Spec is locked in `spec/PASSPORT.md`.
 
 ```text
 PASSPORT SPEC    → LOCKED
-GUARDIAN VERIFY  → executable
+GUARDIAN VERIFY  → executable, tested against ephemeral Ed25519
 RECEIPT STAMPING → OPEN
 CURSOR HOOK      → OPEN
 ```
@@ -14,6 +14,8 @@ pip install -r guardian/requirements.txt
 python3 -m unittest guardian.test_verify
 python3 guardian/verify.py <passport.json> '{"kind":"READ","target_path":"src/app.mjs"}'
 ```
+
+`verify()` returns `0 / 401 / 403 / 407`. CLI Unix `$?` is `0 / 41 / 43 / 47` (8-bit). stderr prints `GUARDIAN_EXIT=401` so a hook can read the HTTP-shaped code.
 
 Mint sets `issued_at` / `expires_at` at issuance (3600s TTL). Templates must not contain timestamps.
 

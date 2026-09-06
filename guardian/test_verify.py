@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 import json
+import os
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -12,6 +15,7 @@ from nacl.signing import SigningKey
 from guardian.canonical import canonical, payload_without_signature
 from guardian.mint import mint
 from guardian.verify import (
+    CLI_EXIT,
     EXIT_BOUNDARY,
     EXIT_DENY,
     EXIT_OK,
@@ -136,6 +140,56 @@ class VerifyContractTests(unittest.TestCase):
         code = verify_document(doc, IN_SCOPE, now=doc["issued_at"])
         self.assertEqual(code, EXIT_SIG)
 
+    def test_mint_cli_then_verify_with_matching_pubkey(self):
+        sk = SigningKey.generate()
+        seed_hex = sk.encode().hex()
+        pub = sk.verify_key.encode().hex()
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "passport.json"
+            proc = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "mint.py"),
+                    str(TEMPLATE_PATH),
+                    "-o",
+                    str(out),
+                ],
+                check=False,
+                env={**os.environ, "GUARDIAN_MASTER_SK_HEX": seed_hex},
+                cwd=str(ROOT.parent),
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(proc.returncode, 0, proc.stderr)
+            doc = json.loads(out.read_text(encoding="utf-8"))
+            self.assertEqual(doc["expires_at"] - doc["issued_at"], TTL_SECONDS)
+            self.assertNotEqual(doc["issued_at"], STALE_TEMPLATE_TS)
+            code = verify(
+                str(out),
+                IN_SCOPE,
+                now=doc["issued_at"],
+                master_pubkey_hex=pub,
+            )
+            self.assertEqual(code, EXIT_OK)
+            cli = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "verify.py"),
+                    str(out),
+                    json.dumps(IN_SCOPE),
+                ],
+                check=False,
+                cwd=str(ROOT.parent),
+                capture_output=True,
+                text=True,
+            )
+            # Uninjected MASTER_PUBKEY_HEX must fail closed.
+            # Unix $? is 41, not 401 (8-bit wait status).
+            self.assertEqual(cli.returncode, 41)
+            self.assertIn("invalid passport signature", cli.stdout)
+            self.assertIn("GUARDIAN_EXIT=401", cli.stderr)
+
+
     def test_expired_is_403(self):
         doc, pub, _ = _minted(now=1_000_000)
         code = verify_document(doc, IN_SCOPE, now=doc["expires_at"], master_pubkey_hex=pub)
@@ -163,6 +217,14 @@ class VerifyContractTests(unittest.TestCase):
         action = {"kind": "READ", "target_path": "/secrets-not-really"}
         code = verify_document(doc, action, now=doc["issued_at"], master_pubkey_hex=pub)
         self.assertEqual(code, EXIT_OK)
+
+    def test_cli_exit_map_is_8_bit(self):
+        self.assertEqual(CLI_EXIT[EXIT_OK], 0)
+        self.assertEqual(CLI_EXIT[EXIT_SIG], 41)
+        self.assertEqual(CLI_EXIT[EXIT_DENY], 43)
+        self.assertEqual(CLI_EXIT[EXIT_BOUNDARY], 47)
+        for unix in CLI_EXIT.values():
+            self.assertLess(unix, 256)
 
     def test_action_not_in_scopes_is_403(self):
         doc, pub, _ = _minted()

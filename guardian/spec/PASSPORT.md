@@ -10,7 +10,7 @@ This lock incorporates three spec findings that applied before the schema was co
 
 ```text
 PASSPORT SPEC    → LOCKED
-GUARDIAN VERIFY  → executable (see guardian/verify.py)
+GUARDIAN VERIFY  → executable, tested against ephemeral Ed25519 (not RESCOPE//ROOT//KARASU)
 RECEIPT STAMPING → OPEN (407 → human decision → RECEIPT://000N)
 CURSOR HOOK      → OPEN (wrapper calls verify() before spawn)
 ```
@@ -40,7 +40,7 @@ Live tokens (mint output) have this shape. Templates MUST omit `issued_at`, `exp
 }
 ```
 
-`issued_at` / `expires_at` above are examples of the *type* (Unix seconds, integers). They are not a frozen template. Any fixture that ships `1741295320` is invalid.
+`issued_at` / `expires_at` above are examples of the *type* (Unix seconds, integers). They are not a frozen template. Any fixture that ships a frozen Unix timestamp is invalid. The March 2025 `1741295320` template is the rejected example.
 
 ### Field rules
 
@@ -117,11 +117,14 @@ Do **not** use `str.rstrip("/*")` — that strips a character class, not the suf
 ```
 
 ```text
-0    proceed
-401  bad signature / malformed / wrong key_type
-403  out of scope (deny, taught) or TTL
-407  boundary crossing → Guardian holds → human decision → RECEIPT://000N
+Python API / GUARDIAN_EXIT=   CLI Unix $?
+0     proceed                 0
+401   bad signature           41
+403   out of scope / TTL      43
+407   boundary hold           47
 ```
+
+Unix wait status is 8-bit. `sys.exit(401)` becomes 145. The hook must import `verify()` (401/403/407) or branch on `$?` 41/43/47. stderr prints `GUARDIAN_EXIT=401` so a wrapper can read the HTTP-shaped code without wrapping.
 
 The 407 branch is where ALLOW ONCE → receipt-stamping plugs in. `GUARDIAN://RECEIPT` is OPEN: same master key signs the receipt; append to the trace log. This module only **holds** (exit 407) and prints the decision prompt:
 

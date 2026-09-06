@@ -2,11 +2,12 @@
 # GUARDIAN://verify — validates a signed passport before any thread action
 # Dependency: pip install pynacl
 #
-# Exit codes (LOCKED):
+# Exit codes (LOCKED, Python API / GUARDIAN_EXIT=):
 #   0   proceed
 #   401 bad signature / malformed / key_type ≠ Ed25519
 #   403 out of scope (deny, taught) or TTL
 #   407 boundary crossing → Guardian holds → human decision → RECEIPT://000N
+# CLI Unix $? is 0 / 41 / 43 / 47 (8-bit). Do not sys.exit(401).
 
 from __future__ import annotations
 
@@ -35,6 +36,15 @@ EXIT_OK = 0
 EXIT_SIG = 401
 EXIT_DENY = 403
 EXIT_BOUNDARY = 407
+
+# Unix wait status is 8-bit. Import verify() to read 401/403/407.
+# CLI $? uses the last two digits so a shell hook can still branch.
+CLI_EXIT = {
+    EXIT_OK: 0,
+    EXIT_SIG: 41,
+    EXIT_DENY: 43,
+    EXIT_BOUNDARY: 47,
+}
 
 
 def _boundary_matches(forbidden: str, target: str) -> bool:
@@ -158,4 +168,14 @@ if __name__ == "__main__":
             file=sys.stderr,
         )
         sys.exit(2)
-    sys.exit(verify(sys.argv[1], json.loads(sys.argv[2])))
+    try:
+        action = json.loads(sys.argv[2])
+        if not isinstance(action, dict):
+            raise ValueError("action must be a JSON object")
+    except ValueError:
+        print("◆ GUARDIAN — invalid passport signature. DROP.")
+        print("GUARDIAN_EXIT=401", file=sys.stderr)
+        sys.exit(CLI_EXIT[EXIT_SIG])
+    code = verify(sys.argv[1], action)
+    print(f"GUARDIAN_EXIT={code}", file=sys.stderr)
+    sys.exit(CLI_EXIT[code])

@@ -13,7 +13,7 @@
   "x-guardian-ttl": {
     "ttl_seconds": 3600,
     "validity": "issued_at <= now < expires_at",
-    "note": "issued_at and expires_at are mint-time Unix integers. They are not schema constants. A template that ships 1741295320 is invalid."
+    "note": "issued_at and expires_at are mint-time Unix integers. They are not schema constants. Frozen template timestamps are invalid."
   },
   "x-guardian-algorithm": {
     "key_type": "Ed25519",

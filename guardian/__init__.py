@@ -2,6 +2,7 @@
 
 from guardian.canonical import canonical, payload_without_signature
 from guardian.verify import (
+    CLI_EXIT,
     EXIT_BOUNDARY,
     EXIT_DENY,
     EXIT_OK,
@@ -13,6 +14,7 @@ from guardian.verify import (
 )
 
 __all__ = [
+    "CLI_EXIT",
     "EXIT_BOUNDARY",
     "EXIT_DENY",
     "EXIT_OK",
