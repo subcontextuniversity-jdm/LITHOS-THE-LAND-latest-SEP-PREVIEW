@@ -501,11 +501,11 @@ button.btn {
 
 .cord-rail {
   position: fixed;
-  right: 18px;
+  right: 10px;
   top: 18%;
   height: 64%;
-  width: 18px;
-  z-index: 6;
+  width: 36px;
+  z-index: 12;
   cursor: pointer;
   background: transparent;
   border: 0;
@@ -678,6 +678,7 @@ button.btn {
 
 .receipt {
   width: min(520px, 100%);
+  margin: 0 auto;
   background: var(--paper);
   color: var(--paper-ink);
   padding: 28px 24px;
