@@ -1,0 +1,10 @@
+# Guardian master secrets — never commit
+*.sk
+*.sk.hex
+guardian/keys/
+.guardian-session/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
