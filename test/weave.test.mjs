@@ -14,7 +14,10 @@ import {
 test("library is not files", () => {
   assert.equal(LIBRARY_NOUNS.FILES, "where bytes live");
   assert.equal(LIBRARY_NOUNS.LIBRARY, "what I have");
-  assert.equal(LIBRARY_NOUNS.WEAVER, "how I compose something new");
+  assert.equal(LIBRARY_NOUNS.TREE, "how it belongs");
+  assert.equal(LIBRARY_NOUNS.THREADS, "what it relates to");
+  assert.equal(LIBRARY_NOUNS.STAGE, "where I work with it");
+  assert.equal(LIBRARY_NOUNS.ADA, "how I compose something new");
 });
 
 test("weave needs two or three Things from the library", () => {

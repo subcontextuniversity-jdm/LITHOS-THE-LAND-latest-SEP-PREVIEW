@@ -16,9 +16,9 @@ export const LIBRARY_NOUNS = Object.freeze({
   LIBRARY: "what I have",
   TREE: "how it belongs",
   THREADS: "what it relates to",
-  STAGE: "how I work with it",
   TRACE: "how it became this",
-  WEAVER: "how I compose something new",
+  STAGE: "where I work with it",
+  ADA: "how I compose something new",
 });
 
 export const PLACES = Object.freeze([
