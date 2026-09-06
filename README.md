@@ -28,6 +28,7 @@ python3 -m http.server 4173 --bind 127.0.0.1
 - `/?origin=1` — THE THINGS WE CARRY
 - `/?enter=1` — the Bench slice
 - `/?land=1` — Pocket
+- `/?proof=1` — HANDOFF 002 five-act proof (browser layouts; conversion SIMULATED; authorization DEMO-ONLY)
 
 ## Canon
 

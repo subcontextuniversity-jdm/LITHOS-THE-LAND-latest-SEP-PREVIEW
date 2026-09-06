@@ -30,7 +30,7 @@ const MYTH = {
   ADA: "composition",
 };
 
-export function startLand(root, { onPocket, onBench, onOrigin }) {
+export function startLand(root, { onPocket, onBench, onOrigin, onProof }) {
   const ac = new AbortController();
   const { signal } = ac;
   const state = { overlay: null, handshake: true };
@@ -110,6 +110,12 @@ export function startLand(root, { onPocket, onBench, onOrigin }) {
             <strong>THE THINGS WE CARRY</strong>
             <p class="lede">Caloundra. Thingiverse. Where a Thing learned to survive the application that created it.</p>
             <div class="hint">Replay the origin →</div>
+          </button>
+          <button class="door glass" data-act="proof" type="button">
+            <div class="tiny">LIVE · HANDOFF 002</div>
+            <strong>THE THING THAT SURVIVES</strong>
+            <p class="lede">THING://0041 through Pocket, Workbench and Drafting Table as browser layouts. Conversion is SIMULATED. Authorization is DEMO-ONLY.</p>
+            <div class="hint">Bring a Thing →</div>
           </button>
           <div class="glass absent-card">
             <div class="tiny">ABSENT</div>
@@ -230,6 +236,11 @@ HUMANS choose.</pre>
       if (act === "origin") {
         ac.abort();
         onOrigin();
+        return;
+      }
+      if (act === "proof") {
+        ac.abort();
+        onProof();
         return;
       }
     },

@@ -1132,6 +1132,82 @@ button.btn {
   padding-top: 22px;
 }
 
+.proof {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+}
+
+.proof-bar,
+.proof-honesty {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 20px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.proof-honesty {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  color: var(--amber);
+}
+
+.proof-acts {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 20px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--dim);
+}
+
+.proof-acts .on {
+  color: var(--cyan);
+}
+
+.proof-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.9fr) 1.4fr;
+  gap: 16px;
+  padding: 12px 20px 40px;
+}
+
+.proof-inspector pre,
+.proof-stage pre {
+  white-space: pre-wrap;
+}
+
+.proof-stage {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.surface-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.surface-card {
+  text-align: left;
+  background: var(--glass);
+  border: 1px solid var(--line);
+  color: inherit;
+  font: inherit;
+  padding: 14px;
+  cursor: pointer;
+}
+
+.surface-card.seen { border-color: var(--cyan-2); }
+.surface-card.selected { border-color: var(--amber); }
+
 @media (max-width: 820px) {
   body { overflow: auto; }
   .home-grid,
@@ -1144,6 +1220,8 @@ button.btn {
   .branch-grid,
   .lib-grid,
   .plant-grid,
+  .proof-layout,
+  .surface-row,
   .surface-grid {
     grid-template-columns: 1fr;
   }

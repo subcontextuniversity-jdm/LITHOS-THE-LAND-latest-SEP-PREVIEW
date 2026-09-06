@@ -2,6 +2,7 @@ import { startKeynote } from "./keynote.mjs";
 import { createWorld, startSlice } from "./slice.mjs";
 import { startPocket } from "./pocket.mjs";
 import { startLand } from "./land.mjs";
+import { startProof } from "./travel.mjs";
 import { loadState } from "./store.mjs";
 
 const root = document.getElementById("app");
@@ -23,6 +24,15 @@ function bootLand() {
       bootSlice(world);
     },
     onOrigin: () => startOrigin(worldFrom()),
+    onProof: () => bootProof(worldFrom()),
+  });
+}
+
+function bootProof(world) {
+  session.stop();
+  session = startProof(root, {
+    human: world?.human ?? { id: "human-josh", name: "Josh", role: "CURSOR" },
+    onBack: () => bootLand(),
   });
 }
 
@@ -58,9 +68,12 @@ const saved = params.get("reset") === "1" ? null : loadState();
 const skip = params.get("enter") === "1";
 const land = params.get("land") === "1" || params.get("pocket") === "1";
 const origin = params.get("origin") === "1";
+const proof = params.get("proof") === "1";
 
 if (origin) {
   startOrigin(worldFrom(saved));
+} else if (proof) {
+  bootProof(worldFrom(saved));
 } else if (land) {
   bootPocket(worldFrom(saved));
 } else if (skip) {
