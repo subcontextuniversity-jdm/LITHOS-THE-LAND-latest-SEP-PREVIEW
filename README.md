@@ -2,17 +2,18 @@
 
 The deepest thesis is becoming: Intelligence should move through relationships without acquiring sovereignty over them. Everything else can be derived from that. A model can be powerful without owning the place. A node can execute without becoming the authority. A ledger can prove an event without becoming the entire application.
 
-This preview is **THE THINGS WE CARRY**, then the human-facing 30 seconds: **Pocket**.
+This preview is **LITHOS//THE LAND** — public handoff 001. A map while the tree is still germinating.
 
 ```text
-ENTER → HUMAN → HOME → PLACE → INTENT → WORKER → SCOPE → ACTION → RECEIPT → HOME
-
-TREE → LEAF → SCREEN → ACTION → ASSET → BRANCH → LIBRARY → TREE
+ROOT → TRUNK → BRANCH → THING
+                   ↘ THREAD
 ```
 
-A card is not a representation trapped in UI. A Thing can come **out** of the application.
+Live branches: Pocket, the Bench, the Caloundra origin. Other surfaces are SKETCH or ABSENT. Good.
 
-Library is not Files. Weave is not an AI sparkle. ADA proposes; you pull the knot.
+```text
+HUMAN → PLACE → SCOPE → WORK → RECEIPT → HOME
+```
 
 DON'T PULL THE GOLDEN CORD.
 
@@ -23,16 +24,18 @@ npm test
 python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
-- `/?enter=1` — skip the origin stage
-- `/?land=1` — Pocket (leaves become screens → weave)
-
-## Film plates
-
-Generate motion with `film/clip-01.txt` … `clip-04.txt`. Stamp `film/overlays.txt` in the edit. Clip 02 must start from Clip 01's last diamond frame.
+- `/` — THE LAND
+- `/?origin=1` — THE THINGS WE CARRY
+- `/?enter=1` — the Bench slice
+- `/?land=1` — Pocket
 
 ## Canon
 
-- `canon/THE-THINGS-WE-CARRY.md` — the origin
 - `canon/THE-GOLDEN-TREE.md` — public handoff 001
+- `canon/THE-THINGS-WE-CARRY.md` — the origin
 - `canon/VISUAL-GRAMMAR-06.txt` — locked wording
 - `canon/LAW.md` — this slice only
+
+## Film
+
+Motion plates in `film/`. Stamp `film/overlays.txt` in the edit. Do not ask the generator to draw the thesis.

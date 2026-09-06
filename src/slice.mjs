@@ -90,7 +90,7 @@ export function createWorld(saved) {
   };
 }
 
-export function startSlice(root, world, { onReplayOrigin, onOpenLand }) {
+export function startSlice(root, world, { onReplayOrigin, onOpenLand, onOpenTree }) {
   const ac = new AbortController();
   const { signal } = ac;
 
@@ -194,6 +194,14 @@ export function startSlice(root, world, { onReplayOrigin, onOpenLand }) {
             <p class="lede">Not a dashboard. A room. You can leave without asking permission.</p>
           </div>
           <div class="home-grid">
+            <button class="door glass" data-act="tree" type="button">
+              <div>
+                <div class="tiny">The Land</div>
+                <strong>THE GOLDEN TREE</strong>
+                <p class="lede">Public preview of the map. Some branches are ABSENT. Good.</p>
+              </div>
+              <div class="hint">Return to the commons →</div>
+            </button>
             <button class="door glass" data-act="land" type="button">
               <div>
                 <div class="tiny">Pocket</div>
@@ -503,6 +511,11 @@ export function startSlice(root, world, { onReplayOrigin, onOpenLand }) {
     if (act === "land") {
       ac.abort();
       onOpenLand();
+      return;
+    }
+    if (act === "tree") {
+      ac.abort();
+      onOpenTree?.();
       return;
     }
     if (act === "home") go("home");
