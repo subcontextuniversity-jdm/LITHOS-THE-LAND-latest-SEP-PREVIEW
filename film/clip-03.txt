@@ -1,0 +1,42 @@
+15-second cinematic UI/UX sequence, 16:9.
+
+Begin with the exact visual language of the previous golden technological world tree: obsidian black space, fine metallic-gold branches, cyan node markers, subtle CAD annotations.
+
+Camera flies toward one branch.
+
+Small luminous leaves grow from the branch. As camera approaches, each leaf unfolds into a complete fictional premium mobile application screen floating vertically in space.
+
+Show believable iOS-inspired mobile UI design without Apple logos or copied applications: rounded cards, large typography, bottom navigation, floating action controls, profile circles, emoji reactions, image tiles, compact status chips, search fields, media cards and tactile buttons.
+
+One screen becomes a HOME view:
+friendly profile header, recent Places, large visual cards, small emoji reactions, activity.
+
+Swipe sideways through a believable screen flow.
+
+HOME transforms into PLACE.
+
+PLACE contains a branching project tree made from cards:
+Music, 3D Models, Screens, Notes, References, People.
+
+Tap 3D Models.
+
+The selected card physically opens outward. A polished 3D object rises out of the phone screen and becomes a real floating object above the interface.
+
+Small associated assets pop outward behind it:
+image preview, audio waveform, document, 3D model, code file, sketch and tiny video frame.
+
+Each asset remains connected to its original mobile card by a thin golden thread.
+
+Camera begins orbiting around the phone and floating assets.
+
+Visual language: premium OLED black mobile interface, restrained translucent glass, crisp white typography, cyan interaction details, metallic amber lineage threads, subtle violet depth.
+
+Mix sophisticated modern mobile design with tiny playful early-internet details: pixel icons, emoji, miniature badges, old download symbols, tiny smiley faces.
+
+Everything must feel usable, tactile and coherent, not an abstract sci-fi HUD.
+
+End with the floating 3D object centered while multiple golden threads extend outward beyond the frame.
+
+Sound: soft mobile taps, tactile pops, card flicks, tiny digital camera click, short sampler sounds, zipper-like transition, delicate thread tension.
+
+No people. No company logos. No existing app branding. No weapons. Avoid illegible generated paragraphs.
