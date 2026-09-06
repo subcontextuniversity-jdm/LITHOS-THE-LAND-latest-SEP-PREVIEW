@@ -1,12 +1,29 @@
-# Josh's browser operating surface
+# JOSH // BROWSER GARAGE
 
 September 2026. Fit assessment, not a security certification.
 
-The twelve-browser catalog was useful. The first shortlist was not.
+The clothes can look like an operating system, an AI co-pilot, or a trail map. The machinery underneath is still one of three engine families.
 
-Wavebox, Opera One, and Vivaldi are all Chromium shells. Two of them also fail the actual test: they tidy tabs, they do not isolate sign-ins. For Josh that is the whole problem.
+```text
+CHROMIUM / BLINK
+├─ Comet
+├─ Wavebox
+├─ Vivaldi
+├─ Brave
+├─ Horse          (Chromium under a custom shell)
+└─ formerly Sidekick
 
-This note locks a mixed-engine top 3, then expands six ideas worth stealing.
+FIREFOX / GECKO
+├─ Firefox
+├─ Floorp
+└─ LibreWolf
+
+WEBKIT
+├─ Safari
+└─ SigmaOS
+```
+
+That is why a browser can feel completely different from Chrome while still sharing most of Chrome's web machinery — and why a Firefox fork can look like Vivaldi without becoming Chromium.
 
 The system can map the past, but it cannot carry it for you.
 Scar is evidence.
@@ -17,7 +34,55 @@ Chrome profiles map history into another window. They do not change the next Gma
 
 ---
 
-## The problem, restated
+## Chromium is not Chrome
+
+Easy to misunderstand. Chromium is the large open-source browser project that provides much of the machinery Chrome uses. Chrome is Google's product on top of that project.
+
+```text
+                CHROMIUM
+                   │
+         ┌─────────┼──────────┐
+         │         │          │
+       Chrome    Comet     Wavebox
+         │         │          │
+       Brave     (AI)      Vivaldi
+```
+
+Each company takes the underlying project and adds its own interface, sync, AI, privacy policy, account system, blockers, workspaces, sidebars, agents, telemetry.
+
+Chromium's security architecture includes sandboxing and Site Isolation: sites can run in separate processes so a hole in one origin does less damage. ([Chromium core principles](https://www.chromium.org/Home/chromium-security/core-principles/))
+
+Using Wavebox does not mean:
+
+> I am secretly just using Google Chrome.
+
+It means:
+
+> Wavebox uses much of the same open-source web machinery.
+
+That is a substantial difference. It is also not engine diversity. A Chromium-specific rendering bug, extension break, or policy change can still hit Wavebox, Comet, and Vivaldi together. That is why Gecko stays in the garage.
+
+Firefox is not Chromium-based. Gecko handles rendering, networking, and internals. SpiderMonkey executes JavaScript. ([Gecko](https://firefox-source-docs.mozilla.org/overview/gecko.html) · [Firefox FAQ](https://www.mozilla.org/en-US/firefox/faq/))
+
+```text
+                THE WEB
+
+       ┌──────────┼───────────┐
+       │          │           │
+     BLINK       GECKO      WEBKIT
+       │          │           │
+   Chromium     Firefox      Safari
+       │          │           │
+   Wavebox      Floorp      SigmaOS
+   Comet        LibreWolf
+   Vivaldi
+   Brave
+   Horse
+```
+
+---
+
+## The problem the garage has to solve
 
 ```text
 RESCOPE Gmail  ≠  JOSH Gmail  ≠  FIXMYIPHONE Gmail
@@ -35,79 +100,219 @@ wrong GitHub
 find old tab
 ```
 
-That is not a tab-manager problem. It is an identity problem.
+That is an identity problem, not a tab-manager problem.
 
-Two different primitives get sold as the same word:
+Two primitives get sold as the same word:
 
-| Primitive | What it actually does | Same-site two logins in one window? |
-| --------- | --------------------- | ----------------------------------- |
-| **Organization** (most "Workspaces") | Hides one pile of tabs so you can see another | No. Cookies are still shared. |
-| **Isolation** (Wavebox Spaces, Firefox Containers) | Separate cookies / session / storage | Yes. |
+| Primitive | What it actually does | Two Gmails, both logged in, one window? |
+| --------- | --------------------- | --------------------------------------- |
+| **Organization** (most "Workspaces") | Hides one pile of tabs so you can see another | No. Cookies still shared. |
+| **Isolation** (Wavebox Spaces, Firefox/Floorp Containers) | Separate cookies / session / storage | Yes. |
 
-Opera Workspaces and Vivaldi Workspaces are organization. Vivaldi staff have said cookie storage is per profile, per window, not per workspace. Switching workspace does not give you a second Gmail.
-
-Wavebox Spaces and Firefox Containers are isolation. That is why they belong in the top 3 and Opera does not.
+Vivaldi Workspaces are organization. Cookie storage is per profile, per window, not per workspace. Opera Workspaces are the same class. Wavebox Spaces and Firefox Containers are isolation.
 
 ---
 
-## Top 3 for Josh
+## The six, plus Vivaldi
 
-Not Google Chrome. Not three Chromium clones. One Blink daily driver, two Gecko identity browsers.
+| Browser | Engine | Personality | Best at | Josh fit |
+| ------- | ------ | ----------- | ------- | -------: |
+| **Comet** | Chromium | AI co-pilot | Research + browser actions | 9/10 as agent lane, not vault |
+| **SigmaOS** | WebKit | Mac workspace OS | Project workspaces | 8/10 concept, 6/10 on this desk |
+| **Wavebox** | Chromium | Mission control | Multiple accounts / apps | **10/10** |
+| **Sidekick** | Chromium | Former work-OS | Historical reference | 5/10 now, do not install |
+| **Horse** | Chromium under custom clothes | Trail / map browser | Remembering how you got somewhere | 9/10 concept |
+| **Floorp** | Firefox / Gecko | Firefox after three espressos | Containers + panels + workspaces | **9.5/10** |
+| **Vivaldi** | Chromium | Power-user cockpit | Maximum native control | **9.5/10** as builder reference |
 
-| # | Browser | Engine | Isolation | Built-in apps | AI | Why it is here |
-| - | ------- | ------ | --------- | ------------- | -- | -------------- |
-| 1 | **Wavebox** | Chromium | **10** Spaces | **10** | 8 | Closest to browser-as-OS *and* it isolates cookies |
-| 2 | **Firefox** | Gecko | **10** Containers | 7 | 8 | Best identity architecture that is not Chromium |
-| 3 | **Floorp** | Gecko | **9** workspace + container | 8 | 5 | Firefox if the command bar can choose identity |
+The two to install first on the Windows PC: **Wavebox + Floorp**. One tests "everything already connected." The other is a real Gecko escape hatch, not another Blink logo.
 
-Opera One, Vivaldi, Edge, and Brave stay off this list on purpose. They are still worth studying. They are not the three to live in first.
+---
 
-### 1. Wavebox — the one that matches the life tree
+## 01. COMET
 
-Wavebox is container-first. A Space holds cookies. A Group holds the apps for a job. Several Spaces can be live in one window.
+### `THE BROWSER WITH A WORKER SITTING BESIDE YOU`
 
-That maps directly:
+Comet is Perplexity's AI browser. Underneath it is Chromium: sites behave as they do in Chrome, and most Chrome Web Store extensions work. Windows, Mac, iOS, Android. ([Comet](https://www.perplexity.ai/comet))
+
+The clothes are the agent layer.
+
+```text
+NORMAL BROWSER
+
+YOU
+ ↓
+PAGE
+ ↓
+READ IT
+ ↓
+DO SOMETHING
+
+
+COMET
+
+YOU
+ ↓
+INTENT
+ ↓
+COMET ASSISTANT
+ ├─ READ PAGE
+ ├─ SEARCH
+ ├─ SUMMARISE
+ ├─ CLICK
+ ├─ TYPE
+ └─ NAVIGATE
+```
+
+Current surface: page-aware Assistant, Perplexity search, Gmail / Calendar connectors, summaries, voice, supervised browser actions. When connectors are on, it can draft and send mail, not just summarise a page.
+
+### Why it is relevant to LITHOS / TALON
+
+```text
+HUMAN
+→ INTENT
+→ AGENT
+→ VISIBLE ACTION
+→ RESULT
+```
+
+That is the TALON loop, already shipping in a Chromium shell.
+
+### The caution
+
+An AI browser receives much richer context than a normal browser. Prompt injection is a structural risk: a page can try to instruct the agent while the agent can see authenticated sessions.
+
+Do not throw every bank account, Proton session, business admin portal, or private inbox into Comet and tell the agent to freely act.
+
+Use it first as:
+
+```text
+RESEARCH
+AI
+DOCUMENTATION
+SEARCH
+PUBLIC WORKFLOWS
+```
+
+Then expand deliberately. Proton Pass stays the credential root. Comet does not become the vault.
+
+Sidekick's team joined Perplexity; Sidekick itself shut down in August 2025 and `meetsidekick.com` now points at Comet. Philosophical lineage:
+
+```text
+SIDEKICK  (work OS)
+   │
+   │ team acquisition
+   ▼
+COMET     (AI work environment)
+```
+
+Not the same product renamed. The work-OS idea moved into an agent browser.
+
+**Josh score: 9/10 as the agent / research lane. 3/10 as the place identities live.**
+
+---
+
+## 02. SIGMAOS
+
+### `THE BROWSER THAT THINKS IT IS macOS FOR THE WEB`
+
+SigmaOS is not Chromium. It uses **WebKit**, the same engine family as Safari. The interface is native SwiftUI on macOS. ([SigmaOS](https://sigmaos.com/))
+
+```text
+CHROME-LIKE WORLD
+Chromium
+ ↓
+Browser UI
+
+SIGMA
+WebKit
++
+SwiftUI
+ ↓
+Mac-native workspace environment
+```
+
+The unit is a workspace, not a giant tab strip.
+
+```text
+◆ LITHOS
+   Claude
+   GitHub
+   Figma
+   Docs
+
+◉ FIXMYIPHONE
+   RepairOS
+   Gmail
+   Parts
+   Facebook
+
+⌂ JOSH
+   Proton
+   Personal
+   Research
+```
+
+A workspace can use a separate profile with independent cookies, so two workspaces can stay signed into different versions of the same service.
+
+The wild technical trick: SigmaOS supports many Chromium extensions even though the engine is WebKit. They implemented compatibility with Chromium's extension APIs themselves. Extensions can be scoped per workspace or globally. ([Extensions](https://docs.sigmaos.com/tutorial/extensions))
+
+That proves:
+
+> You do not have to adopt Chromium's entire worldview just to touch its ecosystem.
+
+That is LITHOS-shell research. A future desk could be WebKit (or Gecko) underneath and still run Proton Pass as a Chrome-shaped extension.
+
+### Problem for this desk
+
+SigmaOS is macOS-only. Windows is "coming soon" in their own copy, not here.
+
+**Concept: 10/10. Current Josh hardware: 6/10. Primary browser: no.**
+
+---
+
+## 03. WAVEBOX
+
+### `THE EVERYTHING-IS-ALREADY-LOGGED-IN BROWSER`
+
+Closest match to the original problem. Chromium underneath, reorganized around apps, identities, and Spaces rather than tabs.
+
+Killer feature: cookie isolation. A Space holds cookies. Several Spaces can be live in one window.
 
 ```text
 WAVEBOX
-├─ SPACE JOSH
-│  ├─ Group: Home
-│  │  ├─ Proton
-│  │  ├─ Banking
-│  │  ├─ Personal Gmail
-│  │  └─ ChatGPT
-│  └─ Group: Calendar
-├─ SPACE RESCOPE
-│  ├─ Group: Comms
-│  │  ├─ Gmail
-│  │  ├─ Slack
-│  │  └─ Gemini
-│  └─ Group: Build
-│     ├─ GitHub
-│     ├─ Drive
-│     └─ Claude
-└─ SPACE FIXMYIPHONE
-   └─ Group: Shop
-      ├─ Gmail
-      ├─ RepairOS
-      ├─ Parts
-      ├─ Facebook
-      └─ Accounting
+
+SPACE // JOSH
+├─ Gmail Josh
+├─ ChatGPT Josh
+└─ Proton
+
+SPACE // RESCOPE
+├─ Gmail RESCOPE
+├─ Slack RESCOPE
+├─ GitHub RESCOPE
+├─ Gemini
+└─ Claude
+
+SPACE // FMI
+├─ Gmail FMI
+├─ Meta
+├─ RepairOS
+└─ Parts
 ```
 
-Critical:
+So `gmail.com` can be several completely different people at once. ([Spaces](https://hub.wavebox.io/spaces/))
+
+Also: persistent web apps, notification badges, Groups, split screen, unified search, Chrome extensions, built-in password manager (ignore it — Proton Pass is the vault), sync, app locking. Windows / Mac / Linux.
+
+Mental model:
 
 ```text
-RESCOPE Gmail ≠ JOSH Gmail
+SPACE     → IDENTITY
+GROUP     → JOB
+APP       → TOOL  (resident, not a tab)
+TAB       → TEMPORARY PAGE
 ```
-
-without a second Chrome profile window.
-
-Three layout modes, same structure underneath:
-
-- **Spaces layout** — one company at a time. Circle icons. New tabs inherit that Space.
-- **List layout** — every Group from every Space in one dock. Agency pattern. Use dividers named JOSH / RESCOPE / FMI.
-- **Explorer layout** — same all-Spaces scope drawn as a tree. No tabstrip. Nested folders.
 
 Hierarchy, permanent to temporary:
 
@@ -115,69 +320,183 @@ Hierarchy, permanent to temporary:
 Space > Group > App > Saved Items > Tab group > Pinned tab > Open tab
 ```
 
-A Space is a decision you make once. An open tab is this afternoon. Saved Items are the Raindrop-killer inside a single client: reference URLs on an app, not loaded, one hover away.
+Saved Items are the Raindrop-killer inside one client: the URL you are afraid to close, parked on the app, not loaded. Bookmarks are global across Spaces — so client-specific links do not belong on the bookmarks bar.
 
-Bookmarks are the exception. The bookmarks bar is global across Spaces. Client-specific links belong as Saved Items, not as bookmarks. If Raindrop remains, it is archive, not the daily filing surface.
+Three layouts, same structure: Spaces (one company at a time), List (every Group, agency-style, use dividers), Explorer (tree, no tabstrip).
 
-**Windows: yes. Chrome extensions: yes. Proton Pass: keep as the credential root, not Wavebox's built-in vault.**
+Do not mix Spaces inside one Group. That is how RESCOPE Slack sits next to JOSH Gmail and the scar returns.
 
-Practical constraint: Basic/free is 2 Spaces, 2 Groups, 2 apps each, 1 extension. Josh needs at least three Spaces (JOSH, RESCOPE, FIXMYIPHONE), probably a fourth (BUILD). The real test requires Pro.
+Practical: Basic/free is 2 Spaces, 2 Groups, 2 apps each, 1 extension. Josh needs at least JOSH / RESCOPE / FIXMYIPHONE, probably BUILD. The real test is Pro. ([Plans](https://hub.wavebox.io/wavebox-plans/))
 
-[Wavebox](https://wavebox.io/) · [Spaces](https://hub.wavebox.io/spaces/) · [Hierarchy](https://hub.wavebox.io/the-wavebox-hierarchy-what-sits-inside-what/) · [Plans](https://hub.wavebox.io/wavebox-plans/)
+If this works, Ferdium becomes unnecessary. Raindrop becomes archive. Flow Launcher stays Windows-wide Ǝ; Wavebox search is browser Ǝ.
 
-**Josh fit: 10/10 for the multi-account job. Engine: Chromium, accepted because it is the only Chromium that is actually container-first.**
+[Wavebox](https://wavebox.io/) · [Hierarchy](https://hub.wavebox.io/the-wavebox-hierarchy-what-sits-inside-what/)
 
-### 2. Firefox — the identity browser that is not Chrome
+**Josh score: 10/10 for the multi-account job.**
 
-Firefox 153 (21 July 2026) shipped native Containers as a preview. Same window. Isolated cookies. Named, colored identities.
+---
+
+## 04. SIDEKICK
+
+### `THE GHOST OF A REALLY GOOD IDEA`
+
+Do not migrate into Sidekick. It is not a product anymore.
+
+It launched as a Chromium "work OS": Slack, WhatsApp, Gmail as persistent applications instead of anonymous tabs. ([TechCrunch, 2021](https://techcrunch.com/2021/03/19/sidekick-browser-wants-to-be-a-productivity-honed-work-os-on-chromium/))
 
 ```text
-SAME WINDOW
-
-Google
-├─ container JOSH
-├─ container RESCOPE
-└─ container FMI
-
-GitHub
-├─ container PERSONAL
-└─ container RESCOPE
+SIDEKICK
+├─ APPS
+├─ WORKSPACES
+├─ MULTIPLE ACCOUNTS
+├─ SEARCH
+├─ SESSIONS
+├─ DISTRACTION CONTROL
+└─ CHROMIUM EXTENSIONS
 ```
 
-This is the strongest non-Chromium answer to "too many accounts."
+Perplexity acquired the team in 2025. Sidekick shut down 3 August 2025. The old site now sends people to Comet.
 
-It is not Wavebox. Firefox still thinks in tabs. Sidebar now holds vertical tabs, synced tabs, bookmarks, history, passwords, and optional chatbot access. Persistent SaaS apps are weaker than Wavebox Groups. Ferdium-style always-on Gmail/Slack is not native.
+```text
+WEB APP ≠ RANDOM TAB
+WEB APP = PERMANENT CAPABILITY
+```
 
-Keep the Multi-Account Containers add-on installed. Mozilla's own preview is missing site-to-container assignment. Power users are told to keep the extension until that lands. For Josh that assignment is the difference between "I remembered to open Gmail in RESCOPE" and "gmail.com always opens as RESCOPE."
+That idea survived. It now lives in Wavebox (isolation + residents) and, more loosely, in Comet (agent + work environment). Wavebox is the living Sidekick. Comet is the mutated heir.
 
-Proton Pass stays the vault. Firefox passwords are a cache at most.
+**Historical inspiration: 9/10. Install today: 2/10.**
 
-[Firefox](https://www.mozilla.org/firefox/) · [Containers preview](https://blog.mozilla.org/en/firefox/firefox-containers-preview/) · [153 notes](https://www.firefox.com/en-US/firefox/153.0/releasenotes/)
+---
 
-**Josh fit: 9/10 as architecture, 7.5/10 as the whole operating surface. Engine: Gecko. This is why the top 3 is not all Chromium.**
+## 05. HORSE
 
-### 3. Floorp — Firefox if a power user kept adding the missing verbs
+### `THE BROWSER THAT REMEMBERS WHY THE TAB EXISTS`
 
-Floorp is the Gecko daily driver if stock Firefox feels like a container demo with extra chrome.
+Horse is different clothes on conventional web machinery (Chromium / Electron under the hood, Chrome-like DevTools, almost no Chrome Web Store). The thing they protected was Trails, not another Chrome clone. Founders: Pascal Pixel and Eleanor McKeown. Windows / Mac / Linux.
 
-Current 12.17 line:
+Normal browsers remember:
+
+```text
+PAGE A
+PAGE B
+PAGE C
+PAGE D
+```
+
+Horse remembers:
+
+```text
+QUESTION
+│
+├─ GOOGLE RESULT
+│  ├─ DOCUMENTATION
+│  │  └─ GITHUB
+│  └─ REDDIT THREAD
+│
+└─ DIFFERENT IDEA
+   └─ ARTICLE
+```
+
+Click a link and it branches underneath the page that led to it. Sub-Trails go down. Side-Trails go sideways. Tabs, bookmarks, and history collapse into one persistent tree. Close the browser; the trail is still there. Drag a trail into notes and the whole family tree lands as Markdown. ([Trails](https://browser.horse/manual/getting-started/how-to-use-horse-browsers-trails))
+
+Josh translation:
+
+```text
+TREE → BRANCH → OBJECT → THREAD
+
+LITHOS LOGIN
+│
+├─ AUTH RESEARCH
+│  ├─ FIREBASE
+│  └─ SUPABASE
+│
+├─ UI REFERENCE
+│  ├─ MOBBIN
+│  └─ FIGMA
+│
+└─ CODE
+   └─ GITHUB
+```
+
+Normal history loses the causal structure. Horse keeps it. That is why it scores so high as LITHOS research and so low as an account dock.
+
+Do not expect Wavebox behaviour. Horse is not "keep 17 Gmails permanently docked." It is "preserve the shape of thought."
+
+Proton Pass / Chrome extensions: weak here. Use Horse as a thinking lab, not as the password surface.
+
+**Daily account-management: 6/10. LITHOS conceptual fit: 10/10.**
+
+[Horse](https://browser.horse/)
+
+---
+
+## 06. FLOORP
+
+### `FIREFOX AFTER THREE ESPRESSOS`
+
+This is why the experiment is not Chromium-only.
+
+Floorp is open source, built on Firefox. v12.17.2 (3 September 2026) rides Firefox 155. Windows / Mac / Linux. No account required.
+
+```text
+FLOORP
+   ↓
+FIREFOX
+   ↓
+GECKO
+   ↓
+SPIDERMONKEY
+```
+
+rather than:
+
+```text
+COMET / WAVEBOX / VIVALDI
+   ↓
+CHROMIUM
+   ↓
+BLINK
+   ↓
+V8
+```
+
+Floorp adds the features that make Vivaldi / Wavebox attractive, on Gecko:
 
 ```text
 Workspaces
-Panel Sidebar
-vertical / horizontal / multi-row tabs
-Zen Mode
+Firefox Containers
+split view (up to four pages)
+web panels
+sidebar
 command palette
-containers
 Tab Stacks (opt-in)
 mouse gestures
-workspace icons
+UI customization
+web apps in their own windows
 ```
 
-The important combination, from the August 2026 12.17 release:
+([Floorp](https://floorp.app/) · [v12.17](https://blog.floorp.app/en/release/12.17.0/) · [v12.17.2](https://blog.floorp.app/en/release/12.17.2/))
 
 ```text
-COMMAND PALETTE
+FLOORP
+
+RESCOPE WORKSPACE
+├─ default container: RESCOPE
+├─ GitHub
+└─ Docs
+
+PERSONAL WORKSPACE
+├─ default container: JOSH
+└─ Gmail
+
+SAFE WORKSPACE
+└─ isolated browsing
+```
+
+Containers keep cookies apart. Workspaces can carry a default container, so new tabs and palette search inherit identity. The 12.17 command palette can also choose a container when opening a URL:
+
+```text
+COMMAND
 → Open URL
 → choose container
    ├─ this workspace's default
@@ -196,227 +515,62 @@ That is close to:
 → GO
 ```
 
-Search-from-palette also uses the current workspace's default container. Workspaces can carry a default identity, which Opera/Vivaldi workspaces cannot.
+Keep the Multi-Account Containers add-on until native Firefox Containers grow site-assignment. Floorp sits on that same Gecko identity model.
 
-Floorp is not Wavebox. Apps are still pages. Isolation is still Firefox containers. What you gain is: place and identity on the same command.
+Engine redundancy is the point. If Chromium has a Blink-specific bug, an extension mess, a rendering regression, or a Google-ecosystem policy change, the garage still has a usable Gecko environment.
 
-Do not run Firefox and Floorp as twin dailies. Floorp *is* the Firefox experiment with the extra verbs. Stock Firefox is the control: native Containers, Mozilla support, fewer moving parts.
+Do not run stock Firefox and Floorp as twin dailies. Floorp *is* the Firefox experiment with the extra verbs. Stock Firefox remains the control: native Containers, Mozilla support, fewer moving parts — keep it installed, do not live in both.
 
-[Floorp](https://floorp.app/) · [v12.17 notes](https://blog.floorp.app/en/release/12.17.0/)
-
-**Josh fit: 8.5/10 as the Gecko daily. 9.5/10 as the Ǝ prototype.**
+**Josh score: 9.5/10 as Gecko daily and fallback.**
 
 ---
 
-## How the three divide the work
+## 07. VIVALDI
+
+### `THE LEGO TECHNIC BROWSER`
+
+Extra comparison. Chromium underneath, deliberately not Chrome's UI.
 
 ```text
-              PROTON PASS
-            credential root
-                  │
-                  ▼
-     ┌────────────┼──────────────┐
-     │            │              │
- WAVEBOX      FIREFOX         FLOORP
- Chromium      Gecko           Gecko
-     │            │              │
- Spaces       Containers     Workspace
- + Groups     + sidebar      + container
- + Apps                      + command
-     │            │              │
- JOSH          JOSH            Ǝ
- RESCOPE       RESCOPE         PLACE
- FMI           FMI             IDENTITY
-     │            │              │
-  live in      prove the      if Firefox
-  this if      identity       chrome is
-  it works     model          too thin
+GOOGLE CHROME
+
+CHROMIUM
++
+GOOGLE UI / SERVICES
+
+
+VIVALDI
+
+CHROMIUM
++
+VIVALDI BACKEND
++
+VIVALDI CUSTOM UI
 ```
 
-If Wavebox handles the three companies cleanly, Ferdium becomes unnecessary. Raindrop becomes archive. Flow Launcher stays Windows-wide Ǝ; Floorp's palette is browser Ǝ.
-
-If Wavebox feels like a paid SaaS dock, Firefox/Floorp is the path that does not drag Google's engine into the trunk.
-
----
-
-## Six ideas to expand (not six more browsers to install)
-
-These are the ideas. Browsers are only where the idea is currently visible.
-
-### Idea 1 — Isolation is not organization
-
-This is the idea the twelve-browser table blurred.
+Vivaldi: about 92% open-source Chromium, ~3% their published C++ backend, ~5% proprietary desktop UI (HTML/CSS/JS). They do not use Google sync. ([Different from Chrome](https://vivaldi.com/blog/vivaldi-different-from-chrome/) · [Open source split](https://vivaldi.com/blog/vivaldi-browser-open-source/))
 
 ```text
-WRONG
-  Workspace named RESCOPE
-  Workspace named JOSH
-  both logged into whichever Google you signed in last
-
-RIGHT
-  Isolated cookie jar named RESCOPE
-  Isolated cookie jar named JOSH
-  Gmail.com in each jar is a different human
+WORKSPACES
+TAB STACKS
+TAB TILING          (no two-pane cap; drag-and-drop; open link as tiled tab)
+MAIL                (multi-account IMAP/POP; pin across workspaces as of 7.8)
+CALENDAR
+RSS
+NOTES
+COMMAND PALETTE
+WEB PANELS
+SESSIONS
+PROFILES
+MOUSE GESTURES
+KEYBOARD WORKFLOWS
 ```
 
-Test any browser with one question:
+Less "we designed your workflow" and more "here are 400 pieces; build the cockpit." That is why it suits Josh. The downside is the same sentence: you can spend six hours building the cockpit.
 
-> Can I have two Gmails visible, both authenticated, in one window, without a second profile process?
+Workspaces here are rooms, not cookie jars. Gmail in a Web Panel and Gmail in a tab share cookies. Vivaldi Mail can combine IMAP accounts; that is protocol multi-account, not Google-session isolation. For RESCOPE Gmail ≠ JOSH Gmail you still need Profiles, which puts you back in window-per-company.
 
-| Browser | Answer |
-| ------- | ------ |
-| Wavebox Spaces | Yes |
-| Firefox / Floorp Containers | Yes |
-| Vivaldi Workspaces | No — same profile cookies |
-| Opera Workspaces | No — same profile cookies |
-| Edge Workspaces | No — project tabs, shared identity |
-| Chrome Profiles | Yes, but each profile is another window / another brain |
-| SigmaOS workspace profiles | Yes, but Mac |
-| Arc Spaces + Profiles | Historically yes; product is frozen |
-
-LITHOS translation: a branch can look like a place and still share a trunk. If identity lives in the trunk, the branch cannot hold a second person.
-
-### Idea 2 — Company as Space, job as Group, app as resident
-
-Wavebox's ladder is the closest existing model to Josh's life tree.
-
-```text
-PLACE     = Space     (JOSH / RESCOPE / FMI)
-WORK      = Group     (Comms / Build / Shop)
-RESIDENT  = App       (Gmail, Slack, RepairOS)
-MEMORY    = Saved Item (the link you are afraid to close)
-NOW       = Tab
-```
-
-Chrome's model is inverted:
-
-```text
-TAB
-TAB
-TAB
-TAB
-TAB
-```
-
-plus a profile you remember to switch.
-
-The Wavebox model is:
-
-```text
-WORKSPACE
-  GMAIL     (resident, badged, sleeping)
-  SLACK
-  GITHUB
-  CLAUDE
-  + temporary tabs
-```
-
-That is why Ferdium may collapse into the browser. Ferdium was the resident-app layer Chrome refused to be. Wavebox already is that layer, with isolation underneath.
-
-Steal this even if Wavebox is not the forever home: **residents are not tabs.** Tabs are the temporary layer. Identity is not a tab either.
-
-Caveat from Wavebox's own docs: a Group can hold apps from more than one Space. Most people should not. Mixing Spaces in one Group is how RESCOPE Slack sits next to JOSH Gmail and the scar comes back.
-
-### Idea 3 — Identity as a first-class container, not a profile window
-
-Firefox Containers (native in 153, complete with the add-on) treat identity as a color on the tab.
-
-```text
-PLACE is optional
-IDENTITY is required
-```
-
-Chrome Profiles treat identity as a whole other browser:
-
-```text
-Window A  — Josh
-Window B  — Rescope
-taskbar soup
-wrong window, right URL, wrong cookies
-```
-
-Containers keep one window and stamp the next pull:
-
-```text
-open mail.google.com
-in RESCOPE
-```
-
-The scar of the wrong account stays visible as a color. Weight is not reset by "I think I'm in the work profile." Memory changes the next pull because the container *is* the pull.
-
-What Firefox still lacks for Josh: residents. You can pin, you can sidebar, you can vertical-tab. You do not get Wavebox Apps with unread badges and sleep schedules per client.
-
-What to steal for LITHOS: **identity is a property of the next action, not a property of the window.** Floorp's palette already does this. TALON / Ǝ should too.
-
-```text
-HUMAN
-→ request
-
-AGENT
-→ must declare IDENTITY
-→ then PLACE
-→ then act
-
-SCREEN
-→ identity remains visible
-→ interrupt still works
-```
-
-An agent that can click but cannot say which Gmail it is in is how weight gets reset by accident.
-
-### Idea 4 — Command as Ǝ: intent, then place, then identity, then go
-
-Floorp 12.17 is the prototype, not because Floorp is beautiful, but because the command is ordered correctly.
-
-```text
-TYPE   github.com
-CHOOSE container RESCOPE
-LAND   in workspace BUILD
-```
-
-versus Chrome:
-
-```text
-hope you are in the right profile
-type github.com
-get Josh's notifications in a Rescope hour
-```
-
-Floorp also lets a workspace own a default container, so search and new tabs inherit identity. That is PLACE carrying IDENTITY without making you re-select it every time — which is the good kind of memory. The workspace remembers. You can still override from the palette.
-
-LITHOS / Flow / Ǝ should not copy Floorp's UI. It should copy the order:
-
-```text
-1. What   (URL, app, person, object)
-2. Who    (JOSH / RESCOPE / FMI)
-3. Where  (desk, workspace, device)
-4. Go
-```
-
-Most launchers skip 2. That is why they keep reproducing Chrome's scar.
-
-### Idea 5 — The desk that is not identity (Vivaldi)
-
-Vivaldi is still the deepest native desk. It dropped out of the top 3 because its Workspaces do not isolate cookies. Study it anyway. Steal the desk. Do not live the identity model.
-
-Native, first-party:
-
-```text
-Mail          (multi-account IMAP/POP, pin across workspaces as of 7.8)
-Calendar      (CalDAV)
-Feeds         (RSS)
-Notes
-Web Panels    (any site as a persistent sidebar)
-Tab Stacks
-Tab Tiling    (no two-pane cap; drag-and-drop; open link as tiled tab)
-Workspaces    (organization only)
-Quick Commands
-Mouse gestures
-Sessions
-Sync
-```
-
-The tiling idea is the desk:
+Steal the desk. Do not live the identity model.
 
 ```text
 ┌ RESCOPE WORKSPACE ──────────────────────┐
@@ -429,140 +583,142 @@ The tiling idea is the desk:
 └─────────────────────────────────────────┘
 ```
 
-Two warnings:
+Vivaldi 7.8 also said humans do not need an AI babysitter. Useful contrast with Comet: visible execution is not the same as an assistant that navigates without a declared identity.
 
-1. Gmail in a Web Panel and Gmail in a tab share cookies. A panel is not a container.
-2. Vivaldi Mail can combine accounts in one client. That is email-protocol multi-account, not Google-session multi-account. Useful for IMAP. Not a substitute for Spaces.
+**Builder / power-user reference: 9.5/10. Josh migration with shared-cookie workspaces: 7/10.**
 
-What to steal: unlimited tiling, web panels as residents-without-isolation, mail/calendar as first-party so the browser can be a desk without Outlook. Combine that *form* with Wavebox/Firefox *identity* and you have the LITHOS brief.
-
-Vivaldi 7.8 also made a product statement: humans do not need an AI babysitter. For TALON that is a reminder. Visible execution is not the same as an assistant that navigates on your behalf without a declared identity.
-
-[Vivaldi](https://vivaldi.com/) · [Workspaces](https://vivaldi.com/features/workspaces/) · [Tab tiling](https://help.vivaldi.com/desktop/tabs/tab-tiling/) · [7.8](https://vivaldi.com/blog/vivaldi-on-desktop-7-8/)
-
-**Desk research: 10/10. Josh migration: 7/10, and only with Profiles for isolation, which puts you back in window-per-company.**
-
-### Idea 6 — How little chrome can exist, and what a trail is
-
-Two Gecko/indie experiments, neither is a Josh daily driver, both are LITHOS form research.
-
-**Zen** asks: how little browser chrome can exist while projects remain understandable?
-
-```text
-Workspaces
-Compact Mode
-Glance
-Split View
-vertical navigation
-```
-
-The lesson is not "migrate Josh to Zen." The lesson is quiet entry. A desk that does not shout every identity, every tab, every panel at once. Compact Mode hides the tab bar until needed. That is relevant to app-within-app and to not turning Wavebox's dock into another noisy Ferdium.
-
-[Zen](https://zen-browser.app/)
-
-**Horse** throws away tabs, bookmarks, and history as separate objects. It uses Trails:
-
-```text
-SOURCE
-├─ RESULT A
-│  ├─ DOC
-│  └─ GITHUB
-└─ RESULT B
-```
-
-Clicking a link does not replace the page. It branches. The path stays visible. Horse describes this as tabs + bookmarks + history in one persistent tree.
-
-That is TREE → STEM → BRANCH → OBJECT, drawn in a sidebar.
-
-Horse will not solve credentials. It is the closest browser to how LITHOS wants *research* to look. Use it as a reading/research surface, or do not install it at all and still steal the rule:
-
-```text
-The path is the memory.
-Closing a tab should not erase how you got there.
-A trail that cannot change the next pull is just a history list.
-```
-
-[Horse Trails](https://browser.horse/manual/getting-started/how-to-use-horse-browsers-trails)
-
-Zen + Horse together:
-
-```text
-ZEN     = how little chrome
-HORSE   = how visible the path
-WAVEBOX = how hard the identity boundary
-```
-
-LITHOS needs all three. No current browser is all three.
+[Vivaldi](https://vivaldi.com/) · [Tiling](https://help.vivaldi.com/desktop/tabs/tab-tiling/)
 
 ---
 
-## What dropped out of the top 3, and why
+## JOSH // BROWSER GARAGE
 
-| Browser | Engine | Kept as | Dropped because |
-| ------- | ------ | ------- | ---------------- |
-| **Opera One** | Chromium | Sidebar-apps reference | Workspaces do not isolate. Most "everything is already here." Still Chrome-family. |
-| **Vivaldi** | Chromium | Idea 5 — the desk | Deepest native OS, wrong identity primitive. |
-| **Edge** | Chromium | TALON / Copilot study only | Microsoft spine. Workspaces are projects. Copilot click-the-page is relevant to visible agents, not to Josh Gmail. |
-| **Brave** | Chromium | Privacy / local Leo memory | Shields + split view + containers-ish, still a Chrome-shaped all-rounder. |
-| **Arc** | Chromium | Archaeological UX | Chromium updates only. Company points new work at Dia. Research 10, migration 5. |
-| **SigmaOS** | WebKit-adjacent / Mac | Mandatory concept study | Workspace = separate profile cookies. Purest "browser = OS" after Wavebox. Josh's main desktop is Windows. |
-| **Sidekick** | Chromium | Wavebox cousin | App-centric. Compare, do not dual-install. |
-| **Chrome** | Chromium | Control | The scar. Profiles as windows. Not in the study set as a destination. |
+Not:
 
-Opera still answers a different question: can one conventional browser contain Gmail, Calendar, Slack, Discord, Telegram, WhatsApp, ChatGPT, Gemini, music, VPN, split-to-four, so Ferdium and a pile of extensions die? Yes, possibly. It will not give you three Gmails. That is why it is not top 3 for *this* Josh.
+```text
+CHROME
+CHROME WITH DIFFERENT LOGO
+CHROME WITH DIFFERENT LOGO
+CHROME WITH DIFFERENT LOGO
+```
 
----
+This:
 
-## The experiment (install these, not twelve)
+```text
+┌────────────────────────────────────┐
+│  WAVEBOX                           │
+│  OPERATIONS                        │
+│  Chromium                          │
+│                                    │
+│  Gmail / Slack / GitHub / AI       │
+│  Multiple identities               │
+└────────────────────────────────────┘
 
-Proton Pass remains outside. Do not put vault secrets in browser sync.
+                 +
+
+┌────────────────────────────────────┐
+│  FLOORP / FIREFOX                  │
+│  BACKUP + IDENTITY LAB             │
+│  Gecko                             │
+│                                    │
+│  Containers                        │
+│  Safe fallback                     │
+└────────────────────────────────────┘
+
+                 +
+
+┌────────────────────────────────────┐
+│  COMET                             │
+│  AGENT / RESEARCH                  │
+│  Chromium                          │
+│                                    │
+│  Search                            │
+│  summarise                         │
+│  browse                            │
+│  supervised actions                │
+└────────────────────────────────────┘
+
+                 +
+
+┌────────────────────────────────────┐
+│  HORSE                             │
+│  RESEARCH / THINKING LAB           │
+│  Trails                            │
+│                                    │
+│  branches                          │
+│  provenance of thought             │
+└────────────────────────────────────┘
+```
+
+Keep off the daily taskbar:
+
+```text
+VIVALDI   = builder / power-user reference
+SIGMAOS   = macOS / LITHOS UX reference (WebKit)
+SIDEKICK  = historical research, not an install
+```
+
+Roles:
+
+```text
+OPERATE     → WAVEBOX   / CHROMIUM
+AGENT       → COMET     / CHROMIUM
+POWER       → VIVALDI   / CHROMIUM
+FALLBACK    → FLOORP    / GECKO
+BASELINE    → FIREFOX   / GECKO
+MAC STUDY   → SIGMAOS   / WEBKIT
+THINK       → HORSE     / TRAILS
+```
 
 ```text
               PROTON PASS
+            credential root
                   │
-                  ▼
-         1. WAVEBOX   (Chromium daily)
-         2. FIREFOX   (Gecko control)
-         3. FLOORP    (only if Firefox is too thin)
+      ┌───────────┼───────────┐
+      │           │           │
+  WAVEBOX      FLOORP      COMET
+  identities   Gecko lab   agent
+  + residents  containers  public work
+      │           │           │
+      └───────────┼───────────┘
+                  │
+                HORSE
+            when the path
+            must stay visible
 ```
 
-**Wavebox setup**
+---
 
-1. Create Spaces: `JOSH`, `RESCOPE`, `FIXMYIPHONE`. Optional: `BUILD`.
-2. One Group per job, not one Group per site.
-3. Promote Gmail / Slack / GitHub / RepairOS to Apps. Do not leave them as tabs you are scared to close.
-4. Client-specific links → Saved Items. Global links → bookmarks or Raindrop archive.
-5. Start in Spaces layout. Switch to List + dividers only if you need all companies on screen at once.
-6. Do not mix Spaces inside one Group.
+## Install first (Windows)
 
-**Firefox setup**
+**Wavebox + Floorp.** Proton Pass remains outside. Do not put vault secrets in browser sync.
 
-1. Create containers: `JOSH`, `RESCOPE`, `FMI`.
-2. Keep Multi-Account Containers add-on. Assign `mail.google.com`, `github.com`, etc. per container where the native preview cannot.
-3. Vertical tabs + sidebar. Do not expect Wavebox residents.
-4. Same three Gmails as Wavebox. This is the A/B.
+### Wavebox
 
-**Floorp setup** (only after Firefox feels incomplete)
+1. Spaces: `JOSH`, `RESCOPE`, `FIXMYIPHONE`. Optional: `BUILD`.
+2. One Group per job, not per site.
+3. Promote Gmail / Slack / GitHub / RepairOS to Apps.
+4. Client links → Saved Items. Global links → bookmarks or Raindrop archive.
+5. Start in Spaces layout. List + dividers only if every company must be on screen.
+6. Do not mix Spaces in one Group.
 
-1. Import the same containers.
+Pass if: zero logout/login cycles, zero wrong Google, zero "which GitHub," Ferdium not opened.
+
+### Floorp
+
+1. Containers: `JOSH`, `RESCOPE`, `FMI`. Keep Multi-Account Containers add-on for site assignment.
 2. Workspaces with default containers: BUILD → RESCOPE, HOME → JOSH, SHOP → FMI.
 3. Bind the command palette. Practice: URL → container → go.
-4. Tab Stacks are opt-in. Ignore until the identity loop is boring.
+4. Tab Stacks are opt-in. Ignore until identity is boring.
 
-**Pass / fail**
+Pass if the same three identities hold, even if Slack/Gmail feel less "installed" than in Wavebox.
 
-A week is enough if the week includes real work, not a demo.
+### Then, if the first two are boring
 
-Pass Wavebox if:
-
-```text
-zero logout/login cycles
-zero wrong Google account
-zero "which GitHub is this"
-Ferdium not opened
-```
-
-Pass Firefox/Floorp if the same three identities hold, even if Slack/Gmail feel less "installed."
+- **Comet** for supervised research / TALON study. No Proton, no banks, no admin portals until the agent lane is trusted.
+- **Horse** when a LITHOS investigation needs a visible trail.
+- **Vivaldi** only as a cockpit you are willing to build, not as the identity solution.
+- **SigmaOS** when you are on a Mac and want WebKit clothes.
 
 Fail any browser whose Workspaces still share cookies. That is organization wearing an isolation costume.
 
@@ -572,19 +728,21 @@ Fail any browser whose Workspaces still share cookies. That is organization wear
 
 Intelligence should move through relationships without acquiring sovereignty over them.
 
-A browser that owns every identity in one cookie jar has acquired sovereignty it should not have. A browser that isolates JOSH from RESCOPE is letting intelligence (you, later an agent) move through the relationship without collapsing the people into one session.
+A browser that owns every identity in one cookie jar has acquired sovereignty it should not have. A browser that isolates JOSH from RESCOPE lets you — later an agent — move through the relationship without collapsing the people into one session.
 
 ```text
 TRUNK   = identity boundary   (Space / Container / Proton Pass)
 BRANCH  = place of work       (Group / Workspace / Desk)
 THING   = the page, the app, the trail
+AGENT   = declared identity before action  (Comet, later TALON)
+PATH    = why the thing exists             (Horse)
 ```
 
-Wavebox currently has the best trunk-plus-branch for Josh's Windows life.
-Firefox currently has the cleanest trunk that is not Chromium.
-Floorp currently has the best verb for declaring trunk before the thing opens.
-Vivaldi currently has the best branch-as-desk, with a shared trunk.
-Zen currently has the least chrome.
+Wavebox currently has the best trunk-plus-branch for this Windows life.
+Floorp currently has the best Gecko trunk that can also be a daily.
+Comet currently has the best agent sitting beside the page — and the most dangerous view into sessions.
 Horse currently has the most honest path.
+Vivaldi currently has the best branch-as-desk, with a shared trunk.
+SigmaOS currently has the purest non-Chromium workspace OS, on the wrong OS for the main desk.
 
 None of them is LITHOS. The next pull should remember which person is pulling.
