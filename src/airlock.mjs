@@ -86,7 +86,7 @@ export function presentNode(kind, { id, name } = {}) {
     ok: true,
     node: Object.freeze({
       id: nodeId,
-      name: name ?? (role === ROLES.GATOR ? "GATOR" : "SENTINEL"),
+      name: name ?? (role === ROLES.GATOR ? "Gator" : "Sentinel"),
       role,
       provider: "local",
       can:
