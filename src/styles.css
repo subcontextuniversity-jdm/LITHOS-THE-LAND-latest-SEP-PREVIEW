@@ -851,9 +851,14 @@ button.btn {
   font-size: 18px;
   padding: 12px 0 16px;
   cursor: pointer;
+  opacity: 0.45;
 }
 
-.phone-nav button.on { color: var(--cyan); }
+.phone-nav button.on {
+  color: var(--cyan);
+  opacity: 1;
+  box-shadow: inset 0 -2px 0 var(--cyan);
+}
 
 .hello h1 { margin-bottom: 0; }
 
@@ -925,7 +930,19 @@ button.btn {
   padding: 20px 0;
 }
 
-.thing-0041 { width: 120px; height: 140px; }
+.thing-0041 { width: 120px; height: 140px; filter: drop-shadow(0 0 18px rgba(110, 231, 242, 0.45)); }
+
+.weave-picks {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.weave-picks .card-btn {
+  padding: 10px 8px;
+}
+
+.weave-picks .card-btn p {
+  display: none;
+}
 
 .spatial {
   padding-top: 24px;
@@ -942,6 +959,12 @@ button.btn {
   to { transform: none; opacity: 1; }
 }
 
+.thread-lines {
+  width: min(420px, 100%);
+  height: 90px;
+  margin: 8px 0 4px;
+}
+
 .asset-cloud {
   display: flex;
   flex-wrap: wrap;
@@ -951,10 +974,10 @@ button.btn {
 
 .asset-chip {
   border: 1px solid var(--gold);
-  background: rgba(201, 162, 39, 0.08);
+  background: rgba(201, 162, 39, 0.12);
   color: var(--ink);
   border-radius: 999px;
-  padding: 6px 10px;
+  padding: 8px 12px;
   font: inherit;
   cursor: pointer;
   animation: pop 0.45s ease both;
@@ -992,9 +1015,13 @@ button.btn {
 }
 
 .pull-box {
-  margin-top: 16px;
+  margin-top: 12px;
   display: grid;
-  gap: 10px;
+  gap: 8px;
+  position: sticky;
+  bottom: 0;
+  background: #07080d;
+  padding: 8px 0 4px;
 }
 
 .pull-box input[type="range"] {

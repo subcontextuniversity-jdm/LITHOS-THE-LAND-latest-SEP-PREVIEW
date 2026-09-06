@@ -4,7 +4,6 @@ import {
   PLACES,
   VIGIL_BRANCH,
   seedLibrary,
-  greeting,
   selectForWeave,
   adaPropose,
   pullWeaveKnot,
@@ -114,7 +113,7 @@ export function startPocket(root, { human, onBack, onReplayOrigin }) {
             <button type="button" data-act="open-weave" class="${state.view === "weave" || state.view === "leaf" ? "on" : ""}">🪡</button>
           </nav>
         </div>
-        ${state.view === "stage" || state.view === "leaf" ? spatial() : ""}
+        ${state.view === "stage" ? spatial() : ""}
       </div>
     </section>`;
   }
@@ -129,7 +128,7 @@ export function startPocket(root, { human, onBack, onReplayOrigin }) {
       { emoji: "✎", name: "sketch" },
       { emoji: "▶", name: "take" },
     ];
-    return `<aside class="spatial ${state.view === "leaf" ? "spatial-leaf" : ""}">
+    return `<aside class="spatial">
       <div class="risen">
         ${thingGlyph()}
         <div class="tiny">◇ THING://0041</div>
@@ -142,6 +141,11 @@ export function startPocket(root, { human, onBack, onReplayOrigin }) {
           )
           .join("")}
       </div>
+      <svg class="thread-lines" viewBox="0 0 420 90" aria-hidden="true">
+        <path d="M10 70 C 80 10, 160 10, 250 40" fill="none" stroke="#c9a227" stroke-width="1.4"/>
+        <path d="M10 70 C 90 90, 180 20, 300 30" fill="none" stroke="#c9a227" stroke-width="1.2" opacity="0.7"/>
+        <path d="M10 70 C 70 40, 210 80, 400 20" fill="none" stroke="#6ee7f2" stroke-width="1" opacity="0.5"/>
+      </svg>
       <p class="lede">Cards are not representations trapped in UI. The Thing left the screen. Each asset keeps a golden thread home.</p>
       <div class="actions">
         <button class="btn" data-act="library" type="button">Follow a thread → Library</button>
@@ -173,7 +177,7 @@ export function startPocket(root, { human, onBack, onReplayOrigin }) {
         <div class="hello">
           <div class="tiny">CURSOR</div>
           <h1>${escapeHtml(who)}</h1>
-          <p class="hello-line">${escapeHtml(greeting())}</p>
+          <p class="hello-line">Good afternoon ◡</p>
         </div>
         <div class="tiny">Places</div>
         <div class="place-grid">${places}</div>
@@ -264,7 +268,7 @@ export function startPocket(root, { human, onBack, onReplayOrigin }) {
         <div class="weave-stack">${rows || "<p class='lede'>Pick two or three Things in Library first.</p>"}</div>
         <p class="lede">What should these become?</p>
         <button class="btn ghost" data-act="ask-ada" type="button">Ask ADA…</button>
-        ${state.ada ? `<p class="tiny">ADA proposes. She cannot tie the knot.</p><div class="proposal-grid">${proposals}</div>` : ""}
+        ${state.ada ? `<p class="tiny">ADA proposes. She cannot tie the knot.</p><div class="proposal-grid weave-picks">${proposals}</div>` : ""}
         ${
           state.pattern
             ? `<div class="pull-box">
@@ -273,7 +277,7 @@ export function startPocket(root, { human, onBack, onReplayOrigin }) {
                 <div class="knot-diamond ${state.tension > 80 ? "tight" : ""}">◆</div>
                 <button class="btn" data-act="knot" type="button" ${state.tension >= 100 ? "" : "disabled"}>Knot</button>
               </div>`
-            : ""
+            : `<p class="lede">Select a pattern, then physically pull. Not another sparkle.</p>`
         }
         <p class="error">${escapeHtml(state.error)}</p>
       </div>`);
