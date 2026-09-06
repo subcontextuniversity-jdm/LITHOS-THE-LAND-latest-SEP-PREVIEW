@@ -1,0 +1,17 @@
+{
+  "identity": "TALON//BUILD",
+  "ttl_seconds": 3600,
+  "claims": {
+    "scopes": ["READ", "WRITE"],
+    "capabilities": {
+      "env_access": false
+    },
+    "boundaries": {
+      "forbidden_paths": [
+        "/.git/*",
+        "/.env",
+        "/secrets/*"
+      ]
+    }
+  }
+}

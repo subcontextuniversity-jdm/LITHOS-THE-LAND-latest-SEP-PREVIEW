@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lithos.local/guardian/schema/passport.v1.json",
+  "title": "GUARDIAN://PASSPORT/v1",
+  "description": "Live signed passport. Templates are not instances of this schema: they omit issued_at, expires_at, and signature. Those three fields are filled at mint.",
+  "x-guardian-canonicalization": {
+    "rule": "UTF-8 JSON with sorted keys and no insignificant whitespace. Signature key stripped before hashing.",
+    "python": "json.dumps(payload_without_signature, sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode('utf-8')",
+    "signed_bytes": "canonical(passport with the 'signature' key removed)",
+    "floats": "forbidden",
+    "profile": "RFC 8785 JCS-compatible for objects, arrays, strings, integers, booleans, and null."
+  },
+  "x-guardian-ttl": {
+    "ttl_seconds": 3600,
+    "validity": "issued_at <= now < expires_at",
+    "note": "issued_at and expires_at are mint-time Unix integers. They are not schema constants. Frozen template timestamps are invalid."
+  },
+  "x-guardian-algorithm": {
+    "key_type": "Ed25519",
+    "superseded": "Curve25519 names X25519 key-agreement, not signing. Guardian matches Ed25519 exactly."
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "identity",
+    "key_type",
+    "issued_at",
+    "expires_at",
+    "claims",
+    "signature"
+  ],
+  "properties": {
+    "schema": {
+      "const": "GUARDIAN://PASSPORT/v1"
+    },
+    "identity": {
+      "type": "string",
+      "minLength": 1,
+      "examples": ["TALON//BUILD"]
+    },
+    "key_type": {
+      "const": "Ed25519",
+      "description": "Signing algorithm on the signed payload. Not Curve25519."
+    },
+    "issued_at": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Unix seconds at mint (now). Must not be copied from a template."
+    },
+    "expires_at": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Unix seconds; issued_at + 3600. Authoritative TTL bound."
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scopes", "capabilities", "boundaries"],
+      "properties": {
+        "scopes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "examples": [["READ", "WRITE"]]
+        },
+        "capabilities": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["env_access"],
+          "properties": {
+            "env_access": {
+              "type": "boolean"
+            }
+          }
+        },
+        "boundaries": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["forbidden_paths"],
+          "properties": {
+            "forbidden_paths": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key_type", "value"],
+      "description": "Stripped before canonicalization. Not part of the signed bytes.",
+      "properties": {
+        "key_type": {
+          "const": "Ed25519"
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Standard Base64 of the 64-byte Ed25519 signature."
+        }
+      }
+    }
+  }
+}
