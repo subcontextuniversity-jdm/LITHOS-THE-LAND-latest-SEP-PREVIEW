@@ -1,0 +1,17 @@
+{
+  "name": "LITHOS ICON LEXICON",
+  "install": "npm install",
+  "terminals": [
+    {
+      "name": "Vite",
+      "command": "npm run dev -- --host 0.0.0.0 --port 5173",
+      "description": "ICON//LEXICON preview. Schema, validator, picker, inspector on port 5173."
+    }
+  ],
+  "ports": [
+    {
+      "name": "ICON LEXICON",
+      "port": 5173
+    }
+  ]
+}
