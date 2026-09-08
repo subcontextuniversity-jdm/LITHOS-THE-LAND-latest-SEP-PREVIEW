@@ -1,0 +1,19 @@
+{
+  "name": "lithos-icon-lexicon",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "description": "ICON//LEXICON — the representation layer of the LITHOS constitution. Semantic glyph lexicon + binding compiler + reference viewer.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "audit": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.4"
+  }
+}
