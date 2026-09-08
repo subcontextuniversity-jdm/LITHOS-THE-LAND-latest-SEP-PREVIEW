@@ -63,6 +63,52 @@ Read as a sentence the system must make true:
 The implementation beneath (Cursor, Kiro, Cline, HERMES, LM Studio, a local/cloud
 model, an MCP server, a future device) may change. The grammar should survive it.
 
+### 1.1 Capability-first, not model-first
+
+**Rule: LITHOS is capability-first, not model-first.** The human states intent; LITHOS
+understands it, finds and `SUMMON`s the right capability, does the work, and returns the
+actual result. Model names, `PASS`, `MCP`, `HERMES`, routing and provider details stay
+**underneath** — surfaced only when the human deliberately opens `WORKBENCH` or inspects
+the `RECEIPT`. (This is the NOTE ↔ WORKBENCH split from P01: one object, calm human
+surface and operator surface.)
+
+Desired flow:
+
+```text
+JOSH
+  ↓
+HOMEY / LITHOS SURFACE
+  ↓  understand intent
+  ↓  find capability  (local model · image generator · Kiro/Cursor · HERMES · other authorised tool)
+  ↓  DO THE WORK
+  ↓
+return the actual result
+```
+
+What the human should see (capability + progress, not model plumbing):
+
+```text
+CREATE UI MOCKUP
+  ↓  working locally where possible
+  ↓  IMAGE capability required
+  ↓  capability summoned
+3 MOCKUPS READY
+```
+
+Anti-patterns to avoid (the screenshots are the example of what **not** to build):
+
+- a generic chatbot with a model picker as the main identity;
+- the user having to know which model can do what;
+- "I can't generate images/UI, but I can explain how" dead ends;
+- capability boundaries exposed as product friction;
+- LM Studio (or any host) becoming the LITHOS mobile interface;
+- a local model acting as the destination instead of one worker underneath the system.
+
+Ties to the table: `MODEL` is one worker underneath — a provider, **never the
+destination**; `CAPABILITY` is the first-class thing the human `SUMMON`s; the
+model-first detail belongs to the `WORKBENCH` / `RECEIPT` surfaces, never the default
+human surface.
+
 ---
 
 ## 2. Land → System → Canonical
