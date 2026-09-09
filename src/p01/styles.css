@@ -1,0 +1,97 @@
+/* P01 — brand decision applied: keep the material identity (amber, obsidian),
+   strip the neon glow / sparkle. Monochrome geometric + amber accent only.
+   Engineered, not decorative. Complex underneath, calm above. */
+:root {
+  --amber: #e8a13c;
+  --amber-soft: #caa06a;
+  --bg: #0b0c0e;
+  --bg2: #101216;
+  --panel: #121418;
+  --panel2: #0e1013;
+  --line: #23262c;
+  --ink: #e7e3da;
+  --ink-dim: #8b8b82;
+  --ink-faint: #61635e;
+  --ok: #79c58a;
+  --blocked: #e0a35b;
+  --failed: #d9736b;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: linear-gradient(180deg, var(--bg2), var(--bg));
+  color: var(--ink);
+  font-family: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  line-height: 1.5;
+}
+#p01 { min-height: 100vh; display: flex; flex-direction: column; }
+
+.top {
+  padding: 14px 22px; border-bottom: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap;
+}
+.brand { color: var(--amber); font-size: 15px; letter-spacing: .08em; }
+.spine { color: var(--ink-faint); font-size: 11px; letter-spacing: .14em; }
+
+.runtime-note {
+  margin: 0; padding: 8px 22px; font-size: 11px; letter-spacing: .04em;
+  color: var(--blocked); background: rgba(224,163,91,.07); border-bottom: 1px solid var(--line);
+}
+
+.layout { flex: 1; display: grid; grid-template-columns: 1fr 1.35fr; gap: 18px; padding: 20px 22px 32px; max-width: 1320px; margin: 0 auto; width: 100%; }
+@media (max-width: 920px) { .layout { grid-template-columns: 1fr; } }
+
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+.panel-head { padding: 10px 16px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+.panel-tag { font-size: 10px; letter-spacing: .18em; color: var(--ink-faint); }
+.panel-body { padding: 16px; }
+
+/* NOTE surface — calm */
+.note-title { font-size: 18px; color: var(--ink); margin: 0 0 6px; letter-spacing: .01em; }
+.chip { display: inline-block; font-size: 10px; letter-spacing: .12em; padding: 2px 9px; border: 1px solid var(--amber-soft); color: var(--amber-soft); border-radius: 999px; }
+.note-body { white-space: pre-wrap; background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 14px; margin: 14px 0; min-height: 96px; color: var(--ink); }
+.row { display: flex; gap: 8px; align-items: center; }
+input.txt { flex: 1; background: var(--panel2); border: 1px solid var(--line); color: var(--ink); border-radius: 8px; padding: 9px 12px; font: inherit; outline: none; }
+input.txt:focus { border-color: var(--amber-soft); }
+button.act { background: transparent; border: 1px solid var(--amber-soft); color: var(--amber); border-radius: 8px; padding: 9px 14px; font: inherit; cursor: pointer; letter-spacing: .04em; }
+button.act:hover { background: rgba(232,161,60,.1); }
+button.danger { border-color: #6a3b38; color: var(--failed); }
+button.danger:hover { background: rgba(217,115,107,.08); }
+.note-foot { font-size: 11px; color: var(--ink-faint); margin-top: 6px; }
+
+/* WORKBENCH surface — operator */
+.kv { display: grid; grid-template-columns: 130px 1fr; gap: 4px 12px; font-size: 12.5px; margin-bottom: 12px; }
+.kv .k { color: var(--ink-dim); letter-spacing: .06em; }
+.kv .v { color: var(--ink); }
+.mono-amber { color: var(--amber); }
+.subhead { font-size: 10px; letter-spacing: .18em; color: var(--ink-faint); margin: 16px 0 8px; border-top: 1px solid var(--line); padding-top: 12px; }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+
+.grants { font-size: 12px; }
+.grant { padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.grant .who { color: var(--amber-soft); }
+.grant .caps { color: var(--ink-dim); }
+
+.lin { font-size: 12px; color: var(--ink-dim); padding: 3px 0; }
+.lin .amber { color: var(--amber-soft); }
+
+.receipt { border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; margin-bottom: 8px; background: var(--panel2); font-size: 12px; }
+.receipt .rid { color: var(--ink-faint); font-size: 10px; letter-spacing: .1em; }
+.receipt .line1 { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin: 2px 0; }
+.receipt .cap { color: var(--ink); }
+.verdict { font-size: 10px; letter-spacing: .12em; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; }
+.v-VERIFIED { color: var(--ok); }
+.v-BLOCKED { color: var(--blocked); }
+.v-FAILED { color: var(--failed); }
+.receipt .ev { color: var(--ink-dim); font-size: 11px; word-break: break-word; }
+.summary { font-size: 11px; color: var(--ink-faint); letter-spacing: .06em; margin-top: 6px; }
+
+.binding { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 8px; }
+.binding-tag { font-size: 9px; letter-spacing: .18em; color: var(--amber-soft); margin-bottom: 5px; }
+.brow { display: grid; grid-template-columns: 150px 1fr; gap: 10px; font-size: 11px; padding: 1px 0; }
+.brow .bk { color: var(--ink-faint); }
+.brow .bv { color: var(--ink-dim); word-break: break-word; }
+.pending { color: var(--blocked); }
+
+.foot { border-top: 1px solid var(--line); padding: 12px 22px; display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-faint); letter-spacing: .1em; flex-wrap: wrap; gap: 8px; }
