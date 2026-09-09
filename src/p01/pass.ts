@@ -133,6 +133,11 @@ export class PassEngine {
     };
   }
 
+  /** Expose the grant for an actor+object so a worker can bind its authority into a receipt. */
+  grantFor(actor: string, object: string): Grant | undefined {
+    return this.grants.find((g) => g.actor === actor && g.object === object);
+  }
+
   authorize(actor: string, object: string, capability: Capability): Decision {
     const grant = this.grants.find((g) => g.actor === actor && g.object === object);
     if (!grant) {

@@ -87,4 +87,11 @@ button.danger:hover { background: rgba(217,115,107,.08); }
 .receipt .ev { color: var(--ink-dim); font-size: 11px; word-break: break-word; }
 .summary { font-size: 11px; color: var(--ink-faint); letter-spacing: .06em; margin-top: 6px; }
 
+.binding { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 8px; }
+.binding-tag { font-size: 9px; letter-spacing: .18em; color: var(--amber-soft); margin-bottom: 5px; }
+.brow { display: grid; grid-template-columns: 150px 1fr; gap: 10px; font-size: 11px; padding: 1px 0; }
+.brow .bk { color: var(--ink-faint); }
+.brow .bv { color: var(--ink-dim); word-break: break-word; }
+.pending { color: var(--blocked); }
+
 .foot { border-top: 1px solid var(--line); padding: 12px 22px; display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-faint); letter-spacing: .1em; flex-wrap: wrap; gap: 8px; }

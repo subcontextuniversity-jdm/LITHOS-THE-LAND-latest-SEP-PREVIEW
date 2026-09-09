@@ -10,6 +10,29 @@
 
 export type Verification = "VERIFIED" | "FAILED" | "BLOCKED";
 
+/**
+ * The evidence a run-level receipt binds, so a "done" claim is tied to external,
+ * inspectable facts rather than the worker's word. Fields requiring Docker / a
+ * registry / a live model are honest PENDING placeholders until those land.
+ */
+export interface EvidenceBinding {
+  imageDigest: string;          // S-SHASH of the sealed worker environment
+  modelId: string;
+  modelFileHash: string;        // model-file hash
+  mcpVersion: string;           // MCP server version
+  toolsetVersion: string;       // skill/plugin versions
+  inputObject: string;          // input object ID
+  inputHash: string;            // input object hash
+  grantedCapabilities: string[];
+  network: string;              // network-access state
+  startedAt: string;
+  completedAt: string;
+  outputHash: string;           // output hash
+  outputLocation: string;       // where the output is stored
+  exitStatus: string;           // exit status
+  validation: Verification;     // validation result
+}
+
 export interface Receipt {
   receiptId: string;
   at: string;
@@ -22,6 +45,8 @@ export interface Receipt {
   /** Independently inspectable evidence, or the denial reason. */
   evidence: string;
   runtime?: string;
+  /** Present on run-level receipts: the full environment/evidence binding. */
+  binding?: EvidenceBinding;
 }
 
 export class ReceiptLedger {

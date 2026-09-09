@@ -80,7 +80,7 @@ describe("P01-04 — PASS DENY", () => {
 describe("P01-05 — WORKER TRACE", () => {
   it("Hermes operates on NOTE-0042 without creating another canonical note", () => {
     expect(store.count()).toBe(1);
-    const out = new Hermes(pass).run({
+    const out = new Hermes(pass, ledger).run({
       objectId: CANONICAL_NOTE_ID,
       intent: "Describe NOTE-0042 and append one authorised operator update.",
       allowedTools: ["note.read", "note.describe", "note.update"],
@@ -95,13 +95,58 @@ describe("P01-05 — WORKER TRACE", () => {
     expect(out.receipts.every((r) => r.actor === "WORKER:HERMES")).toBe(true);
     // Honest about the runtime: not a live model.
     expect(out.runtime).toBe(HERMES_RUNTIME);
-    expect(out.runtime).toContain("LM Studio NOT connected");
+    expect(out.runtime).toContain("NOT connected");
   });
 
   it("Hermes cannot exceed its scope: note.delete is BLOCKED", () => {
     const res = pass.invoke("WORKER:HERMES", CANONICAL_NOTE_ID, "note.delete");
     expect(res.decision).toBe("DENY");
     expect(res.receipt.verification).toBe("BLOCKED");
+  });
+});
+
+describe("P01-07 — EVIDENCE BINDING (receipt contract)", () => {
+  it("Hermes emits a run receipt binding external evidence; pending fields are honest, not faked", () => {
+    const out = new Hermes(pass, ledger).run({
+      objectId: CANONICAL_NOTE_ID,
+      intent: "Describe and append.",
+      allowedTools: ["note.read", "note.describe", "note.update"],
+      requestedUpdate: "Operator: confirmed tiling delivery date.",
+    });
+    const b = out.runReceipt.binding!;
+    expect(b).toBeTruthy();
+    expect(out.runReceipt.capability).toBe("hermes.run");
+
+    // Real, computable-now bindings:
+    expect(b.inputObject).toBe(CANONICAL_NOTE_ID);
+    expect(b.inputHash).toMatch(/^0x[0-9a-f]+$/);
+    expect(b.grantedCapabilities).toEqual(["note.read", "note.describe", "note.update"]);
+    expect(b.network).toContain("no egress");
+    expect(b.outputHash).toMatch(/^0x[0-9a-f]+$/);
+    expect(b.outputLocation).toBe(`${CANONICAL_NOTE_ID}@rev2`);
+    expect(b.exitStatus).toBe("OK");
+    expect(b.validation).toBe("VERIFIED");
+    expect(b.startedAt).toBeTruthy();
+    expect(b.completedAt).toBeTruthy();
+
+    // Honest PENDING for what needs Docker / a registry / a live model — NOT faked:
+    expect(b.imageDigest).toContain("pending");
+    expect(b.modelFileHash).toContain("pending");
+    expect(b.mcpVersion).toContain("pending");
+    // Toolset version is real now.
+    expect(b.toolsetVersion).toMatch(/@\d/);
+  });
+
+  it("a blocked run still produces a run receipt with BLOCKED validation", () => {
+    const out = new Hermes(pass, ledger).run({
+      objectId: CANONICAL_NOTE_ID,
+      intent: "Attempt out-of-scope delete.",
+      allowedTools: ["note.delete"],
+      requestedUpdate: "",
+    });
+    expect(out.status).toBe("BLOCKED");
+    expect(out.runReceipt.binding!.validation).toBe("BLOCKED");
+    expect(out.runReceipt.binding!.exitStatus).toBe("BLOCKED");
   });
 });
 

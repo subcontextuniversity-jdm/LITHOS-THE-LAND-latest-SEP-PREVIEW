@@ -29,12 +29,16 @@ export interface LineageEntry {
 
 // Small, synchronous, content-derived hash (djb2 → hex). Not cryptographic; it
 // exists so a receipt can carry independently inspectable evidence that content
-// actually changed, rather than a worker's claim that it did.
-export function contentHash(note: Note): string {
-  const s = `${note.id}|${note.title}|${note.body}|${note.status}|${note.revision}`;
+// actually changed, rather than a worker's claim that it did. A real deployment
+// swaps this for a content-addressed digest (image/output S-SHASH).
+export function hashString(s: string): string {
   let h = 5381;
   for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0;
   return "0x" + h.toString(16).padStart(8, "0");
+}
+
+export function contentHash(note: Note): string {
+  return hashString(`${note.id}|${note.title}|${note.body}|${note.status}|${note.revision}`);
 }
 
 /**

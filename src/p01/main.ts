@@ -2,7 +2,9 @@ import "./styles.css";
 import { CANONICAL_NOTE_ID, ObjectStore } from "./object.ts";
 import { PassEngine, seedGrants } from "./pass.ts";
 import { ReceiptLedger } from "./receipts.ts";
+import type { EvidenceBinding } from "./receipts.ts";
 import { Hermes, HERMES_RUNTIME } from "./hermes.ts";
+import { isPending } from "./environment.ts";
 import { noteSurface, workbenchSurface } from "./surfaces.ts";
 
 // P01 NOTE PROOF — one canonical object rendered through two surfaces, every
@@ -12,7 +14,7 @@ import { noteSurface, workbenchSurface } from "./surfaces.ts";
 const store = new ObjectStore();
 const ledger = new ReceiptLedger();
 const pass = new PassEngine(store, ledger);
-const hermes = new Hermes(pass);
+const hermes = new Hermes(pass, ledger);
 const grants = seedGrants();
 
 let humanDraft = "Electrician confirmed Thursday 9am.";
@@ -22,6 +24,29 @@ const root = document.querySelector<HTMLDivElement>("#p01")!;
 
 function esc(s: string): string {
   return s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]!));
+}
+
+// Render the run-level evidence binding: the answer to "how do we know Hermes
+// didn't fake it?". PENDING fields (require Docker / registry / live model) are
+// visibly marked rather than dressed up as bound.
+function renderBinding(b: EvidenceBinding): string {
+  const val = (v: string) => (isPending(v) ? `<span class="pending">${esc(v)}</span>` : esc(v));
+  const rows: [string, string][] = [
+    ["image digest (S-SHASH)", val(b.imageDigest)],
+    ["model", esc(b.modelId)],
+    ["model-file hash", val(b.modelFileHash)],
+    ["MCP version", val(b.mcpVersion)],
+    ["toolset version", esc(b.toolsetVersion)],
+    ["input object", `${esc(b.inputObject)} · ${esc(b.inputHash)}`],
+    ["granted caps", esc(b.grantedCapabilities.join(", "))],
+    ["network", esc(b.network)],
+    ["started / done", `${esc(b.startedAt)} → ${esc(b.completedAt)}`],
+    ["output", `${esc(b.outputHash)} @ ${esc(b.outputLocation)}`],
+    ["exit / validation", `${esc(b.exitStatus)} · ${esc(b.validation)}`],
+  ];
+  return `<div class="binding"><div class="binding-tag">EVIDENCE BINDING</div>${rows
+    .map(([k, v]) => `<div class="brow"><span class="bk">${k}</span><span class="bv">${v}</span></div>`)
+    .join("")}</div>`;
 }
 
 function saveHumanUpdate(): void {
@@ -113,6 +138,7 @@ function render(): void {
             <div class="rid">${r.receiptId} · ${r.at}</div>
             <div class="line1"><span class="cap">${esc(r.actor)} → <b>${r.capability}</b> on ${r.object}</span><span class="verdict v-${r.verification}">${r.verification}</span></div>
             <div class="ev">scope ${esc(r.scope)} · ${r.decision} · ${esc(r.evidence)}</div>
+            ${r.binding ? renderBinding(r.binding) : ""}
           </div>`).join("")}
       </div>
     </section>
